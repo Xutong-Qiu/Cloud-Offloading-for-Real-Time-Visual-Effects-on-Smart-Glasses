@@ -18,7 +18,6 @@ material {
 
     // This material disables all lighting
     shadingModel : unlit,
-    featureLevel : 0
 }
 
 fragment {
