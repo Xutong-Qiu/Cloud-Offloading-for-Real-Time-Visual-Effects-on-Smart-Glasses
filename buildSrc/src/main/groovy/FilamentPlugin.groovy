@@ -53,21 +53,31 @@ abstract class TaskWithBinary extends DefaultTask {
 
     @Input
     Property<String> getBinary() {
+
+
         if (binaryPath == null) {
+
             def tool = ["/bin/${binaryName}.exe", "/bin/${binaryName}"]
-            def fullPath = tool.collect { path ->
-                def filamentToolsPath = providers
-                        .gradleProperty("com.google.android.filament.tools-dir")
-                        .forUseAtConfigurationTime().get()
-                def directory = objects.fileProperty()
-                        .fileValue(new File(filamentToolsPath)).getAsFile().get()
-                Paths.get(directory.absolutePath, path).toFile()
-            }
+
+            def filamentToolsPath = providers.gradleProperty("com.google.android.filament.tools-dir").forUseAtConfigurationTime().get()
+            def directory = objects.fileProperty().fileValue(new File(filamentToolsPath)).getAsFile().get()
+            def absolutePath = directory.absolutePath
+            def fullPath = tool.collect { path -> Paths.get(absolutePath, path).toFile() }
+//            def fullPath = tool.collect { path ->
+//                def filamentToolsPath = providers
+//                        .gradleProperty("../out/release/filament")
+//                        .forUseAtConfigurationTime().get()
+//                def directory = objects.fileProperty()
+//                        .fileValue(new File(filamentToolsPath)).getAsFile().get()
+//                Paths.get(directory.absolutePath, path).toFile()
+//            }
 
             binaryPath = objects.property(String.class)
             binaryPath.set(
                     (OperatingSystem.current().isWindows() ? fullPath[0] : fullPath[1]).toString())
         }
+
+        //throw new IllegalArgumentException("Age cannot be negative.")
         return binaryPath
     }
 }
@@ -322,6 +332,7 @@ class FilamentToolsPlugin implements Plugin<Project> {
         extension.iblOutputDir = project.objects.directoryProperty()
         extension.meshInputFile = project.objects.fileProperty()
         extension.meshOutputDir = project.objects.directoryProperty()
+
 
         project.tasks.register("filamentCompileMaterials", MaterialCompiler) {
             enabled =
