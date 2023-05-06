@@ -10,7 +10,7 @@ import android.view.Surface
 import android.view.animation.LinearInterpolator
 import com.google.android.filament.*
 import com.google.android.filament.android.DisplayHelper
-import com.google.android.filament.android.FilamentHelper
+//import com.google.android.filament.android.FilamentHelper
 import com.google.android.filament.android.UiHelper
 import kotlin.math.PI
 import kotlin.math.cos
@@ -126,12 +126,20 @@ class MainActivity : Activity() {
 
     private fun loadMaterial() {
         var name = "materials/baked_color.filamat"
-        if (engine.activeFeatureLevel == Engine.FeatureLevel.FEATURE_LEVEL_0) {
-            name = "materials/baked_color_es2.filamat"
+        //if (engine.activeFeatureLevel == Engine.FeatureLevel.FEATURE_LEVEL_0) {
+            //name = "materials/baked_color_es2.filamat"
+        //}
+        val buffer = readUncompressedAsset(name)
+        buffer.let {
+            val remainingBytes = it.remaining()
+            val materialBuilder = Material.Builder()
+            val materialPayload = materialBuilder.payload(it, remainingBytes)
+            material = materialPayload.build(engine)//
+
         }
-        readUncompressedAsset(name).let {
-            material = Material.Builder().payload(it, it.remaining()).build(engine)
-        }
+//        readUncompressedAsset(name).let {
+//            material = Material.Builder().payload(it, it.remaining()).build(engine)
+//        }
     }
 
     private fun createMesh() {
@@ -233,7 +241,7 @@ class MainActivity : Activity() {
 
         // Stop the animation and any pending frame
         choreographer.removeFrameCallback(frameScheduler)
-        animator.cancel();
+        animator.cancel()
 
         // Always detach the surface before destroying the engine
         uiHelper.detach()
@@ -290,11 +298,11 @@ class MainActivity : Activity() {
             }
 
             swapChain = engine.createSwapChain(surface, flags)
-            displayHelper.attach(renderer, surfaceView.display);
+            displayHelper.attach(renderer, surfaceView.display)
         }
 
         override fun onDetachedFromSurface() {
-            displayHelper.detach();
+            displayHelper.detach()
             swapChain?.let {
                 engine.destroySwapChain(it)
                 // Required to ensure we don't return before Filament is done executing the
@@ -313,21 +321,32 @@ class MainActivity : Activity() {
 
             view.viewport = Viewport(0, 0, width, height)
 
-            FilamentHelper.synchronizePendingFrames(engine)
+            //FilamentHelper.synchronizePendingFrames(engine)
         }
     }
 
     private fun readUncompressedAsset(assetName: String): ByteBuffer {
-        assets.openFd(assetName).use { fd ->
+        val fd = assets.openFd(assetName)
+        fd.use {
             val input = fd.createInputStream()
             val dst = ByteBuffer.allocate(fd.length.toInt())
-
             val src = Channels.newChannel(input)
             src.read(dst)
             src.close()
-
-            return dst.apply { rewind() }
+            val rewoundBuffer = dst.apply { rewind() }
+            return rewoundBuffer
         }
+
+//        assets.openFd(assetName).use { fd ->
+//            val input = fd.createInputStream()
+//            val dst = ByteBuffer.allocate(fd.length.toInt())
+//
+//            val src = Channels.newChannel(input)
+//            src.read(dst)
+//            src.close()
+//
+//            return dst.apply { rewind() }
+//        }
     }
 
 

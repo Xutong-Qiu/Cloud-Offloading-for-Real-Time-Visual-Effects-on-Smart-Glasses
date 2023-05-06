@@ -34,7 +34,6 @@ using ParameterPrecision = MaterialBuilder::ParameterPrecision;
 using OutputTarget = MaterialBuilder::OutputTarget;
 using OutputQualifier = MaterialBuilder::VariableQualifier;
 using OutputType = MaterialBuilder::OutputType;
-using ConstantType = MaterialBuilder::ConstantType;
 
 // Convenience methods to convert std::string to Enum and also iterate over Enum values.
 class Enums {
@@ -78,7 +77,6 @@ private:
     static std::unordered_map<std::string, OutputTarget> mStringToOutputTarget;
     static std::unordered_map<std::string, OutputQualifier> mStringToOutputQualifier;
     static std::unordered_map<std::string, OutputType> mStringToOutputType;
-    static std::unordered_map<std::string, ConstantType> mStringToConstantType;
 };
 
 template<typename T>

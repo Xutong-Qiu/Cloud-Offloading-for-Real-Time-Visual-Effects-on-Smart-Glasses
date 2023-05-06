@@ -27,10 +27,6 @@ fragment {
 
         // We set the material's color to the color interpolated from
         // the model's vertices
-         vec3 worldPos = getWorldPosition();
-         vec3 worldNormal = vec3(1., 1., 1.);
-         vec3 viewPos = getWorldViewVector();
-
         material.baseColor = getColor();
     }
 }

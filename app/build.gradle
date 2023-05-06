@@ -54,10 +54,14 @@ android {
 
 
 dependencies {
-    implementation 'com.google.android.filament:filament-utils-android:1.34.0'
-    implementation 'com.google.android.filament:gltfio-android:1.34.0'
-    implementation 'com.google.android.filament:filament-android:1.34.0'
-    implementation 'com.google.android.filament:filamat-android:1.34.0'
+    implementation "androidx.annotation:annotation:1.6.0"
+    // To use the Java-compatible @Experimental API annotation
+    implementation "androidx.annotation:annotation-experimental:1.4.0-dev01"
+
+    implementation 'com.google.android.filament:filament-utils-android:1.32.2'
+    implementation 'com.google.android.filament:gltfio-android:1.32.2'
+    implementation 'com.google.android.filament:filament-android:1.32.2'
+    implementation 'com.google.android.filament:filamat-android:1.32.2'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.20"
     //implementation project(':app')
 //    implementation 'androidx.core:core-ktx:1.8.0'

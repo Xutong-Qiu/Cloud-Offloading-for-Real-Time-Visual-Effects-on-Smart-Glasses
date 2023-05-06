@@ -39,7 +39,6 @@
 #include <string>
 #include <utility>
 #include <vector>
-#include <variant>
 
 #include <stddef.h>
 #include <stdint.h>
@@ -142,6 +141,13 @@ protected:
         TargetLanguage targetLanguage;
     };
     std::vector<CodeGenParams> mCodeGenPermutations;
+    // For finding properties and running semantic analysis, we always use the same code gen
+    // permutation. This is the first permutation generated with default arguments passed to matc.
+    static constexpr const CodeGenParams mSemanticCodeGenParams = {
+            .shaderModel = ShaderModel::MOBILE,
+            .targetApi = TargetApi::OPENGL,
+            .targetLanguage = TargetLanguage::SPIRV
+    };
 
     // Keeps track of how many times MaterialBuilder::init() has been called without a call to
     // MaterialBuilder::shutdown(). Internally, glslang does something similar. We keep track for
@@ -231,14 +237,11 @@ public:
     using TransparencyMode = filament::TransparencyMode;
     using SpecularAmbientOcclusion = filament::SpecularAmbientOcclusion;
 
-    using AttributeType = filament::backend::UniformType;
     using UniformType = filament::backend::UniformType;
-    using ConstantType = filament::backend::ConstantType;
     using SamplerType = filament::backend::SamplerType;
     using SubpassType = filament::backend::SubpassType;
     using SamplerFormat = filament::backend::SamplerFormat;
     using ParameterPrecision = filament::backend::Precision;
-    using Precision = filament::backend::Precision;
     using CullingMode = filament::backend::CullingMode;
     using FeatureLevel = filament::backend::FeatureLevel;
 
@@ -286,15 +289,6 @@ public:
     //! Add a parameter array to this material.
     MaterialBuilder& parameter(const char* name, size_t size, UniformType type,
             ParameterPrecision precision = ParameterPrecision::DEFAULT) noexcept;
-
-    //! Add a constant parameter to this material.
-    template<typename T>
-    using is_supported_constant_parameter_t = typename std::enable_if<
-            std::is_same<int32_t, T>::value ||
-            std::is_same<float, T>::value ||
-            std::is_same<bool, T>::value>::type;
-    template<typename T, typename = is_supported_constant_parameter_t<T>>
-    MaterialBuilder& constant(const char *name, ConstantType type, T defaultValue = 0);
 
     /**
      * Add a sampler parameter to this material.
@@ -658,16 +652,6 @@ public:
         int location;
     };
 
-    struct Constant {
-        utils::CString name;
-        ConstantType type;
-        union {
-            int32_t i;
-            float f;
-            bool b;
-        } defaultValue;
-    };
-
     static constexpr size_t MATERIAL_PROPERTIES_COUNT = filament::MATERIAL_PROPERTIES_COUNT;
     using Property = filament::Property;
 
@@ -695,7 +679,6 @@ public:
     using ParameterList = Parameter[MAX_PARAMETERS_COUNT];
     using SubpassList = Parameter[MAX_SUBPASS_COUNT];
     using BufferList = std::vector<std::unique_ptr<filament::BufferInterfaceBlock>>;
-    using ConstantList = std::vector<Constant>;
 
     // returns the number of parameters declared in this material
     uint8_t getParameterCount() const noexcept { return mParameterCount; }
@@ -714,44 +697,20 @@ public:
     FeatureLevel getFeatureLevel() const noexcept { return mFeatureLevel; }
     /// @endcond
 
-    struct Attribute {
-        std::string_view name;
-        AttributeType type;
-        MaterialBuilder::VertexAttribute location;
-        std::string getAttributeName() const noexcept {
-            return "mesh_" + std::string{ name };
-        }
-        std::string getDefineName() const noexcept {
-            std::string uppercase{ name };
-            transform(uppercase.cbegin(), uppercase.cend(), uppercase.begin(), ::toupper);
-            return "HAS_ATTRIBUTE_" + uppercase;
-        }
-    };
-
-    using AttributeDatabase = std::array<Attribute, filament::backend::MAX_VERTEX_ATTRIBUTE_COUNT>;
-
-    static inline AttributeDatabase const& getAttributeDatabase() noexcept {
-        return sAttributeDatabase;
-    }
-
 private:
-    static const AttributeDatabase sAttributeDatabase;
-
     void prepareToBuild(MaterialInfo& info) noexcept;
 
     // Return true if the shader is syntactically and semantically valid.
     // This method finds all the properties defined in the fragment and
     // vertex shaders of the material.
-    bool findAllProperties(CodeGenParams const& semanticCodeGenParams) noexcept;
+    bool findAllProperties() noexcept;
 
     // Multiple calls to findProperties accumulate the property sets across fragment
     // and vertex shaders in mProperties.
     bool findProperties(filament::backend::ShaderStage type,
-            MaterialBuilder::PropertyList& allProperties,
-            CodeGenParams const& semanticCodeGenParams) noexcept;
+            MaterialBuilder::PropertyList& p) noexcept;
 
-    bool runSemanticAnalysis(MaterialInfo const& info,
-            CodeGenParams const& semanticCodeGenParams) noexcept;
+    bool runSemanticAnalysis(MaterialInfo const& info) noexcept;
 
     bool checkLiteRequirements() noexcept;
 
@@ -804,7 +763,6 @@ private:
 
     PropertyList mProperties;
     ParameterList mParameters;
-    ConstantList mConstants;
     SubpassList mSubpasses;
     VariableList mVariables;
     OutputList mOutputs;
