@@ -1,0 +1,13 @@
+# draco pkg-config.
+prefix=/Users/wei/Desktop/filament-PowerVR/out/release/filament
+exec_prefix=/Users/wei/Desktop/filament-PowerVR/out/release/filament/bin
+libdir=/Users/wei/Desktop/filament-PowerVR/out/release/filament/lib
+includedir=/Users/wei/Desktop/filament-PowerVR/out/release/filament/include
+
+Name: Draco
+Description: 3D Compression.
+Version: 1.4.1
+Requires:
+Conflicts:
+Libs: -L/Users/wei/Desktop/filament-PowerVR/out/release/filament/lib -ldraco
+Cflags: -I/Users/wei/Desktop/filament-PowerVR/out/release/filament/include -std=c++11

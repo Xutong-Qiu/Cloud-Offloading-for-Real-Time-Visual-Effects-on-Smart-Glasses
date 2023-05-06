@@ -1,0 +1,525 @@
+
+---
+events:
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.26.3/share/cmake/Modules/CMakeDetermineSystem.cmake:199 (message)"
+      - "CMakeLists.txt:9 (project)"
+    message: |
+      The target system is: Linux - 1 - 
+      The host system is: Darwin - 22.4.0 - arm64
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.26.3/share/cmake/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "/opt/homebrew/Cellar/cmake/3.26.3/share/cmake/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/opt/homebrew/Cellar/cmake/3.26.3/share/cmake/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:9 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+      Compiler: /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/armv7a-linux-androideabi19-clang 
+      Build flags: ;-mthumb;-march=armv7-a;-mcpu=cortex-a15;-mfloat-abi=softfp;-mfpu=neon-vfpv4;-fPIE
+      Id flags:  
+      
+      The output was:
+      0
+      
+      
+      Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.out"
+      
+      The C compiler identification is Clang, found in:
+        /Users/wei/Desktop/filament-PowerVR/out/cmake-android-release-arm7/CMakeFiles/3.26.3/CompilerIdC/a.out
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.26.3/share/cmake/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "/opt/homebrew/Cellar/cmake/3.26.3/share/cmake/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/opt/homebrew/Cellar/cmake/3.26.3/share/cmake/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:9 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+      Compiler: /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/armv7a-linux-androideabi19-clang++ 
+      Build flags: ;;-mthumb;-march=armv7-a;-mcpu=cortex-a15;-mfloat-abi=softfp;-mfpu=neon-vfpv4;-fPIE
+      Id flags:  
+      
+      The output was:
+      0
+      
+      
+      Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "a.out"
+      
+      The CXX compiler identification is Clang, found in:
+        /Users/wei/Desktop/filament-PowerVR/out/cmake-android-release-arm7/CMakeFiles/3.26.3/CompilerIdCXX/a.out
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.26.3/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:57 (try_compile)"
+      - "/opt/homebrew/Cellar/cmake/3.26.3/share/cmake/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:9 (project)"
+    checks:
+      - "Detecting C compiler ABI info"
+    directories:
+      source: "/Users/wei/Desktop/filament-PowerVR/out/cmake-android-release-arm7/CMakeFiles/CMakeScratch/TryCompile-rF61Wr"
+      binary: "/Users/wei/Desktop/filament-PowerVR/out/cmake-android-release-arm7/CMakeFiles/CMakeScratch/TryCompile-rF61Wr"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " -mthumb -march=armv7-a -mcpu=cortex-a15 -mfloat-abi=softfp -mfpu=neon-vfpv4 -fPIE"
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: "    -march=armv7-a -Wl,--no-warn-mismatch -L/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/arm-linux-androideabi/lib/armv7-a -static-libstdc++ -fPIE -pie"
+      CMAKE_POSITION_INDEPENDENT_CODE: "ON"
+    buildResult:
+      variable: "CMAKE_C_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: /Users/wei/Desktop/filament-PowerVR/out/cmake-android-release-arm7/CMakeFiles/CMakeScratch/TryCompile-rF61Wr
+        
+        Run Build Command(s):/opt/homebrew/bin/ninja -v cmTC_c1327 && [1/2] /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/armv7a-linux-androideabi19-clang   -mthumb -march=armv7-a -mcpu=cortex-a15 -mfloat-abi=softfp -mfpu=neon-vfpv4 -fPIE  -fPIE   -v -MD -MT CMakeFiles/cmTC_c1327.dir/CMakeCCompilerABI.c.o -MF CMakeFiles/cmTC_c1327.dir/CMakeCCompilerABI.c.o.d -o CMakeFiles/cmTC_c1327.dir/CMakeCCompilerABI.c.o -c /opt/homebrew/Cellar/cmake/3.26.3/share/cmake/Modules/CMakeCCompilerABI.c
+        Android (8490178, based on r450784d) clang version 14.0.6 (https://android.googlesource.com/toolchain/llvm-project 4c603efb0cca074e9238af8b4106c30add4418f6)
+        Target: armv7a-unknown-linux-android19
+        Thread model: posix
+        InstalledDir: /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin
+         (in-process)
+         "/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang-14" -cc1 -triple thumbv7-unknown-linux-android19 -emit-obj -mrelax-all --mrelax-relocations -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCCompilerABI.c -mrelocation-model pic -pic-level 2 -pic-is-pie -mframe-pointer=all -ffp-contract=on -fno-rounding-math -mconstructor-aliases -target-cpu cortex-a15 -target-feature +soft-float-abi -target-feature -crc -target-feature -dotprod -target-feature +dsp -target-feature -mve -target-feature -mve.fp -target-feature -ras -target-feature -bf16 -target-feature -sb -target-feature -i8mm -target-feature -lob -target-feature -cdecp0 -target-feature -cdecp1 -target-feature -cdecp2 -target-feature -cdecp3 -target-feature -cdecp4 -target-feature -cdecp5 -target-feature -cdecp6 -target-feature -cdecp7 -target-feature -pacbti -target-feature +hwdiv-arm -target-feature +hwdiv -target-feature +vfp2 -target-feature +vfp2sp -target-feature +vfp3 -target-feature +vfp3d16 -target-feature +vfp3d16sp -target-feature +vfp3sp -target-feature +fp16 -target-feature +vfp4 -target-feature +vfp4d16 -target-feature +vfp4d16sp -target-feature +vfp4sp -target-feature -fp-armv8 -target-feature -fp-armv8d16 -target-feature -fp-armv8d16sp -target-feature -fp-armv8sp -target-feature -fullfp16 -target-feature +fp64 -target-feature +d32 -target-feature +neon -target-feature -fp16fml -target-feature -crypto -target-feature -sha2 -target-feature -aes -target-abi aapcs-linux -mfloat-abi soft -fallow-half-arguments-and-returns -mllvm -treat-scalable-fixed-error-as-warning -debugger-tuning=gdb -target-linker-version 14.0.6 -v -fcoverage-compilation-dir=/Users/wei/Desktop/filament-PowerVR/out/cmake-android-release-arm7/CMakeFiles/CMakeScratch/TryCompile-rF61Wr -resource-dir /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/14.0.6 -dependency-file CMakeFiles/cmTC_c1327.dir/CMakeCCompilerABI.c.o.d -MT CMakeFiles/cmTC_c1327.dir/CMakeCCompilerABI.c.o -sys-header-deps -internal-isystem /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/14.0.6/include -internal-isystem /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/local/include -internal-externc-isystem /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/include/arm-linux-androideabi -internal-externc-isystem /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/include -internal-externc-isystem /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/include -fdebug-compilation-dir=/Users/wei/Desktop/filament-PowerVR/out/cmake-android-release-arm7/CMakeFiles/CMakeScratch/TryCompile-rF61Wr -ferror-limit 19 -fno-signed-char -fgnuc-version=4.2.1 -o CMakeFiles/cmTC_c1327.dir/CMakeCCompilerABI.c.o -x c /opt/homebrew/Cellar/cmake/3.26.3/share/cmake/Modules/CMakeCCompilerABI.c
+        clang -cc1 version 14.0.6 based upon LLVM 14.0.6git default target x86_64-apple-darwin22.4.0
+        ignoring nonexistent directory "/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/include"
+        #include "..." search starts here:
+        #include <...> search starts here:
+         /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/14.0.6/include
+         /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/local/include
+         /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/include/arm-linux-androideabi
+         /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/include
+        End of search list.
+        [2/2] : && /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/armv7a-linux-androideabi19-clang -mthumb -march=armv7-a -mcpu=cortex-a15 -mfloat-abi=softfp -mfpu=neon-vfpv4 -fPIE -march=armv7-a -Wl,--no-warn-mismatch -L/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/arm-linux-androideabi/lib/armv7-a -static-libstdc++ -fPIE -pie -v CMakeFiles/cmTC_c1327.dir/CMakeCCompilerABI.c.o -o cmTC_c1327   && :
+        Android (8490178, based on r450784d) clang version 14.0.6 (https://android.googlesource.com/toolchain/llvm-project 4c603efb0cca074e9238af8b4106c30add4418f6)
+        Target: armv7a-unknown-linux-android19
+        Thread model: posix
+        InstalledDir: /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin
+        clang-14: warning: argument unused during compilation: '-static-libstdc++' [-Wunused-command-line-argument]
+         "/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/ld" -pie -EL --warn-shared-textrel -z now -z relro -z max-page-size=4096 -X --hash-style=both --enable-new-dtags --eh-frame-hdr -m armelf_linux_eabi -dynamic-linker /system/bin/linker -o cmTC_c1327 /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/lib/arm-linux-androideabi/19/crtbegin_dynamic.o -L/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/arm-linux-androideabi/lib/armv7-a -L/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/14.0.6/lib/linux/arm -L/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/lib/arm-linux-androideabi/19 -L/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/lib/arm-linux-androideabi -L/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/lib/../lib -L/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/lib --no-warn-mismatch CMakeFiles/cmTC_c1327.dir/CMakeCCompilerABI.c.o /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/14.0.6/lib/linux/libclang_rt.builtins-arm-android.a -l:libunwind.a -ldl -lc /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/14.0.6/lib/linux/libclang_rt.builtins-arm-android.a -l:libunwind.a -ldl /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/lib/arm-linux-androideabi/19/crtend_android.o
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.26.3/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:127 (message)"
+      - "/opt/homebrew/Cellar/cmake/3.26.3/share/cmake/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:9 (project)"
+    message: |
+      Parsed C implicit include dir info: rv=done
+        found start of include info
+        found start of implicit include info
+          add: [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/14.0.6/include]
+          add: [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/local/include]
+          add: [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/include/arm-linux-androideabi]
+          add: [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/include]
+        end of search list found
+        collapse include dir [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/14.0.6/include] ==> [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/14.0.6/include]
+        collapse include dir [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/local/include] ==> [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/local/include]
+        collapse include dir [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/include/arm-linux-androideabi] ==> [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/arm-linux-androideabi]
+        collapse include dir [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/include] ==> [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include]
+        implicit include dirs: [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/14.0.6/include;/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/local/include;/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/arm-linux-androideabi;/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include]
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.26.3/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:152 (message)"
+      - "/opt/homebrew/Cellar/cmake/3.26.3/share/cmake/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:9 (project)"
+    message: |
+      Parsed C implicit link information:
+        link line regex: [^( *|.*[/\\])(ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        ignore line: [Change Dir: /Users/wei/Desktop/filament-PowerVR/out/cmake-android-release-arm7/CMakeFiles/CMakeScratch/TryCompile-rF61Wr]
+        ignore line: []
+        ignore line: [Run Build Command(s):/opt/homebrew/bin/ninja -v cmTC_c1327 && [1/2] /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/armv7a-linux-androideabi19-clang   -mthumb -march=armv7-a -mcpu=cortex-a15 -mfloat-abi=softfp -mfpu=neon-vfpv4 -fPIE  -fPIE   -v -MD -MT CMakeFiles/cmTC_c1327.dir/CMakeCCompilerABI.c.o -MF CMakeFiles/cmTC_c1327.dir/CMakeCCompilerABI.c.o.d -o CMakeFiles/cmTC_c1327.dir/CMakeCCompilerABI.c.o -c /opt/homebrew/Cellar/cmake/3.26.3/share/cmake/Modules/CMakeCCompilerABI.c]
+        ignore line: [Android (8490178  based on r450784d) clang version 14.0.6 (https://android.googlesource.com/toolchain/llvm-project 4c603efb0cca074e9238af8b4106c30add4418f6)]
+        ignore line: [Target: armv7a-unknown-linux-android19]
+        ignore line: [Thread model: posix]
+        ignore line: [InstalledDir: /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin]
+        ignore line: [ (in-process)]
+        ignore line: [ "/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang-14" -cc1 -triple thumbv7-unknown-linux-android19 -emit-obj -mrelax-all --mrelax-relocations -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCCompilerABI.c -mrelocation-model pic -pic-level 2 -pic-is-pie -mframe-pointer=all -ffp-contract=on -fno-rounding-math -mconstructor-aliases -target-cpu cortex-a15 -target-feature +soft-float-abi -target-feature -crc -target-feature -dotprod -target-feature +dsp -target-feature -mve -target-feature -mve.fp -target-feature -ras -target-feature -bf16 -target-feature -sb -target-feature -i8mm -target-feature -lob -target-feature -cdecp0 -target-feature -cdecp1 -target-feature -cdecp2 -target-feature -cdecp3 -target-feature -cdecp4 -target-feature -cdecp5 -target-feature -cdecp6 -target-feature -cdecp7 -target-feature -pacbti -target-feature +hwdiv-arm -target-feature +hwdiv -target-feature +vfp2 -target-feature +vfp2sp -target-feature +vfp3 -target-feature +vfp3d16 -target-feature +vfp3d16sp -target-feature +vfp3sp -target-feature +fp16 -target-feature +vfp4 -target-feature +vfp4d16 -target-feature +vfp4d16sp -target-feature +vfp4sp -target-feature -fp-armv8 -target-feature -fp-armv8d16 -target-feature -fp-armv8d16sp -target-feature -fp-armv8sp -target-feature -fullfp16 -target-feature +fp64 -target-feature +d32 -target-feature +neon -target-feature -fp16fml -target-feature -crypto -target-feature -sha2 -target-feature -aes -target-abi aapcs-linux -mfloat-abi soft -fallow-half-arguments-and-returns -mllvm -treat-scalable-fixed-error-as-warning -debugger-tuning=gdb -target-linker-version 14.0.6 -v -fcoverage-compilation-dir=/Users/wei/Desktop/filament-PowerVR/out/cmake-android-release-arm7/CMakeFiles/CMakeScratch/TryCompile-rF61Wr -resource-dir /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/14.0.6 -dependency-file CMakeFiles/cmTC_c1327.dir/CMakeCCompilerABI.c.o.d -MT CMakeFiles/cmTC_c1327.dir/CMakeCCompilerABI.c.o -sys-header-deps -internal-isystem /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/14.0.6/include -internal-isystem /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/local/include -internal-externc-isystem /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/include/arm-linux-androideabi -internal-externc-isystem /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/include -internal-externc-isystem /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/include -fdebug-compilation-dir=/Users/wei/Desktop/filament-PowerVR/out/cmake-android-release-arm7/CMakeFiles/CMakeScratch/TryCompile-rF61Wr -ferror-limit 19 -fno-signed-char -fgnuc-version=4.2.1 -o CMakeFiles/cmTC_c1327.dir/CMakeCCompilerABI.c.o -x c /opt/homebrew/Cellar/cmake/3.26.3/share/cmake/Modules/CMakeCCompilerABI.c]
+        ignore line: [clang -cc1 version 14.0.6 based upon LLVM 14.0.6git default target x86_64-apple-darwin22.4.0]
+        ignore line: [ignoring nonexistent directory "/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/include"]
+        ignore line: [#include "..." search starts here:]
+        ignore line: [#include <...> search starts here:]
+        ignore line: [ /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/14.0.6/include]
+        ignore line: [ /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/local/include]
+        ignore line: [ /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/include/arm-linux-androideabi]
+        ignore line: [ /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/include]
+        ignore line: [End of search list.]
+        ignore line: [[2/2] : && /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/armv7a-linux-androideabi19-clang -mthumb -march=armv7-a -mcpu=cortex-a15 -mfloat-abi=softfp -mfpu=neon-vfpv4 -fPIE -march=armv7-a -Wl --no-warn-mismatch -L/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/arm-linux-androideabi/lib/armv7-a -static-libstdc++ -fPIE -pie -v CMakeFiles/cmTC_c1327.dir/CMakeCCompilerABI.c.o -o cmTC_c1327   && :]
+        ignore line: [Android (8490178  based on r450784d) clang version 14.0.6 (https://android.googlesource.com/toolchain/llvm-project 4c603efb0cca074e9238af8b4106c30add4418f6)]
+        ignore line: [Target: armv7a-unknown-linux-android19]
+        ignore line: [Thread model: posix]
+        ignore line: [InstalledDir: /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin]
+        ignore line: [clang-14: warning: argument unused during compilation: '-static-libstdc++' [-Wunused-command-line-argument]]
+        link line: [ "/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/ld" -pie -EL --warn-shared-textrel -z now -z relro -z max-page-size=4096 -X --hash-style=both --enable-new-dtags --eh-frame-hdr -m armelf_linux_eabi -dynamic-linker /system/bin/linker -o cmTC_c1327 /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/lib/arm-linux-androideabi/19/crtbegin_dynamic.o -L/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/arm-linux-androideabi/lib/armv7-a -L/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/14.0.6/lib/linux/arm -L/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/lib/arm-linux-androideabi/19 -L/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/lib/arm-linux-androideabi -L/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/lib/../lib -L/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/lib --no-warn-mismatch CMakeFiles/cmTC_c1327.dir/CMakeCCompilerABI.c.o /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/14.0.6/lib/linux/libclang_rt.builtins-arm-android.a -l:libunwind.a -ldl -lc /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/14.0.6/lib/linux/libclang_rt.builtins-arm-android.a -l:libunwind.a -ldl /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/lib/arm-linux-androideabi/19/crtend_android.o]
+          arg [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/ld] ==> ignore
+          arg [-pie] ==> ignore
+          arg [-EL] ==> ignore
+          arg [--warn-shared-textrel] ==> ignore
+          arg [-znow] ==> ignore
+          arg [-zrelro] ==> ignore
+          arg [-zmax-page-size=4096] ==> ignore
+          arg [-X] ==> ignore
+          arg [--hash-style=both] ==> ignore
+          arg [--enable-new-dtags] ==> ignore
+          arg [--eh-frame-hdr] ==> ignore
+          arg [-m] ==> ignore
+          arg [armelf_linux_eabi] ==> ignore
+          arg [-dynamic-linker] ==> ignore
+          arg [/system/bin/linker] ==> ignore
+          arg [-o] ==> ignore
+          arg [cmTC_c1327] ==> ignore
+          arg [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/lib/arm-linux-androideabi/19/crtbegin_dynamic.o] ==> obj [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/lib/arm-linux-androideabi/19/crtbegin_dynamic.o]
+          arg [-L/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/arm-linux-androideabi/lib/armv7-a] ==> dir [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/arm-linux-androideabi/lib/armv7-a]
+          arg [-L/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/14.0.6/lib/linux/arm] ==> dir [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/14.0.6/lib/linux/arm]
+          arg [-L/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/lib/arm-linux-androideabi/19] ==> dir [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/lib/arm-linux-androideabi/19]
+          arg [-L/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/lib/arm-linux-androideabi] ==> dir [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/lib/arm-linux-androideabi]
+          arg [-L/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/lib/../lib] ==> dir [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/lib/../lib]
+          arg [-L/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/lib] ==> dir [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/lib]
+          arg [--no-warn-mismatch] ==> ignore
+          arg [CMakeFiles/cmTC_c1327.dir/CMakeCCompilerABI.c.o] ==> ignore
+          arg [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/14.0.6/lib/linux/libclang_rt.builtins-arm-android.a] ==> lib [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/14.0.6/lib/linux/libclang_rt.builtins-arm-android.a]
+          arg [-l:libunwind.a] ==> lib [-l:libunwind.a]
+          arg [-ldl] ==> lib [dl]
+          arg [-lc] ==> lib [c]
+          arg [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/14.0.6/lib/linux/libclang_rt.builtins-arm-android.a] ==> lib [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/14.0.6/lib/linux/libclang_rt.builtins-arm-android.a]
+          arg [-l:libunwind.a] ==> lib [-l:libunwind.a]
+          arg [-ldl] ==> lib [dl]
+          arg [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/lib/arm-linux-androideabi/19/crtend_android.o] ==> obj [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/lib/arm-linux-androideabi/19/crtend_android.o]
+        remove lib [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/14.0.6/lib/linux/libclang_rt.builtins-arm-android.a]
+        remove lib [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/14.0.6/lib/linux/libclang_rt.builtins-arm-android.a]
+        collapse obj [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/lib/arm-linux-androideabi/19/crtbegin_dynamic.o] ==> [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/arm-linux-androideabi/19/crtbegin_dynamic.o]
+        collapse obj [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/lib/arm-linux-androideabi/19/crtend_android.o] ==> [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/arm-linux-androideabi/19/crtend_android.o]
+        collapse library dir [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/arm-linux-androideabi/lib/armv7-a] ==> [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/arm-linux-androideabi/lib/armv7-a]
+        collapse library dir [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/14.0.6/lib/linux/arm] ==> [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/14.0.6/lib/linux/arm]
+        collapse library dir [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/lib/arm-linux-androideabi/19] ==> [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/arm-linux-androideabi/19]
+        collapse library dir [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/lib/arm-linux-androideabi] ==> [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/arm-linux-androideabi]
+        collapse library dir [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/lib/../lib] ==> [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib]
+        collapse library dir [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/lib] ==> [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib]
+        implicit libs: [-l:libunwind.a;dl;c;-l:libunwind.a;dl]
+        implicit objs: [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/arm-linux-androideabi/19/crtbegin_dynamic.o;/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/arm-linux-androideabi/19/crtend_android.o]
+        implicit dirs: [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/arm-linux-androideabi/lib/armv7-a;/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/14.0.6/lib/linux/arm;/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/arm-linux-androideabi/19;/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/arm-linux-androideabi;/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib]
+        implicit fwks: []
+      
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.26.3/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:57 (try_compile)"
+      - "/opt/homebrew/Cellar/cmake/3.26.3/share/cmake/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:9 (project)"
+    checks:
+      - "Detecting CXX compiler ABI info"
+    directories:
+      source: "/Users/wei/Desktop/filament-PowerVR/out/cmake-android-release-arm7/CMakeFiles/CMakeScratch/TryCompile-oJrKGH"
+      binary: "/Users/wei/Desktop/filament-PowerVR/out/cmake-android-release-arm7/CMakeFiles/CMakeScratch/TryCompile-oJrKGH"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: "  -mthumb -march=armv7-a -mcpu=cortex-a15 -mfloat-abi=softfp -mfpu=neon-vfpv4 -fPIE"
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: "    -march=armv7-a -Wl,--no-warn-mismatch -L/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/arm-linux-androideabi/lib/armv7-a -static-libstdc++ -fPIE -pie"
+      CMAKE_POSITION_INDEPENDENT_CODE: "ON"
+    buildResult:
+      variable: "CMAKE_CXX_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: /Users/wei/Desktop/filament-PowerVR/out/cmake-android-release-arm7/CMakeFiles/CMakeScratch/TryCompile-oJrKGH
+        
+        Run Build Command(s):/opt/homebrew/bin/ninja -v cmTC_8af98 && [1/2] /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/armv7a-linux-androideabi19-clang++   -mthumb -march=armv7-a -mcpu=cortex-a15 -mfloat-abi=softfp -mfpu=neon-vfpv4 -fPIE  -fPIE   -v -MD -MT CMakeFiles/cmTC_8af98.dir/CMakeCXXCompilerABI.cpp.o -MF CMakeFiles/cmTC_8af98.dir/CMakeCXXCompilerABI.cpp.o.d -o CMakeFiles/cmTC_8af98.dir/CMakeCXXCompilerABI.cpp.o -c /opt/homebrew/Cellar/cmake/3.26.3/share/cmake/Modules/CMakeCXXCompilerABI.cpp
+        Android (8490178, based on r450784d) clang version 14.0.6 (https://android.googlesource.com/toolchain/llvm-project 4c603efb0cca074e9238af8b4106c30add4418f6)
+        Target: armv7a-unknown-linux-android19
+        Thread model: posix
+        InstalledDir: /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin
+         (in-process)
+         "/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang-14" -cc1 -triple thumbv7-unknown-linux-android19 -emit-obj -mrelax-all --mrelax-relocations -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCXXCompilerABI.cpp -mrelocation-model pic -pic-level 2 -pic-is-pie -mframe-pointer=all -ffp-contract=on -fno-rounding-math -mconstructor-aliases -target-cpu cortex-a15 -target-feature +soft-float-abi -target-feature -crc -target-feature -dotprod -target-feature +dsp -target-feature -mve -target-feature -mve.fp -target-feature -ras -target-feature -bf16 -target-feature -sb -target-feature -i8mm -target-feature -lob -target-feature -cdecp0 -target-feature -cdecp1 -target-feature -cdecp2 -target-feature -cdecp3 -target-feature -cdecp4 -target-feature -cdecp5 -target-feature -cdecp6 -target-feature -cdecp7 -target-feature -pacbti -target-feature +hwdiv-arm -target-feature +hwdiv -target-feature +vfp2 -target-feature +vfp2sp -target-feature +vfp3 -target-feature +vfp3d16 -target-feature +vfp3d16sp -target-feature +vfp3sp -target-feature +fp16 -target-feature +vfp4 -target-feature +vfp4d16 -target-feature +vfp4d16sp -target-feature +vfp4sp -target-feature -fp-armv8 -target-feature -fp-armv8d16 -target-feature -fp-armv8d16sp -target-feature -fp-armv8sp -target-feature -fullfp16 -target-feature +fp64 -target-feature +d32 -target-feature +neon -target-feature -fp16fml -target-feature -crypto -target-feature -sha2 -target-feature -aes -target-abi aapcs-linux -mfloat-abi soft -fallow-half-arguments-and-returns -mllvm -treat-scalable-fixed-error-as-warning -debugger-tuning=gdb -target-linker-version 14.0.6 -v -fcoverage-compilation-dir=/Users/wei/Desktop/filament-PowerVR/out/cmake-android-release-arm7/CMakeFiles/CMakeScratch/TryCompile-oJrKGH -resource-dir /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/14.0.6 -dependency-file CMakeFiles/cmTC_8af98.dir/CMakeCXXCompilerABI.cpp.o.d -MT CMakeFiles/cmTC_8af98.dir/CMakeCXXCompilerABI.cpp.o -sys-header-deps -internal-isystem /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/include/c++/v1 -internal-isystem /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/14.0.6/include -internal-isystem /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/local/include -internal-externc-isystem /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/include/arm-linux-androideabi -internal-externc-isystem /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/include -internal-externc-isystem /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/include -fdeprecated-macro -fdebug-compilation-dir=/Users/wei/Desktop/filament-PowerVR/out/cmake-android-release-arm7/CMakeFiles/CMakeScratch/TryCompile-oJrKGH -ferror-limit 19 -fno-signed-char -fgnuc-version=4.2.1 -fcxx-exceptions -fexceptions -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_8af98.dir/CMakeCXXCompilerABI.cpp.o -x c++ /opt/homebrew/Cellar/cmake/3.26.3/share/cmake/Modules/CMakeCXXCompilerABI.cpp
+        clang -cc1 version 14.0.6 based upon LLVM 14.0.6git default target x86_64-apple-darwin22.4.0
+        ignoring nonexistent directory "/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/include"
+        #include "..." search starts here:
+        #include <...> search starts here:
+         /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/include/c++/v1
+         /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/14.0.6/include
+         /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/local/include
+         /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/include/arm-linux-androideabi
+         /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/include
+        End of search list.
+        [2/2] : && /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/armv7a-linux-androideabi19-clang++ -mthumb -march=armv7-a -mcpu=cortex-a15 -mfloat-abi=softfp -mfpu=neon-vfpv4 -fPIE -march=armv7-a -Wl,--no-warn-mismatch -L/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/arm-linux-androideabi/lib/armv7-a -static-libstdc++ -fPIE -pie -v CMakeFiles/cmTC_8af98.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_8af98   && :
+        Android (8490178, based on r450784d) clang version 14.0.6 (https://android.googlesource.com/toolchain/llvm-project 4c603efb0cca074e9238af8b4106c30add4418f6)
+        Target: armv7a-unknown-linux-android19
+        Thread model: posix
+        InstalledDir: /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin
+         "/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/ld" -pie -EL --warn-shared-textrel -z now -z relro -z max-page-size=4096 -X --hash-style=both --enable-new-dtags --eh-frame-hdr -m armelf_linux_eabi -dynamic-linker /system/bin/linker -o cmTC_8af98 /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/lib/arm-linux-androideabi/19/crtbegin_dynamic.o -L/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/arm-linux-androideabi/lib/armv7-a -L/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/14.0.6/lib/linux/arm -L/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/lib/arm-linux-androideabi/19 -L/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/lib/arm-linux-androideabi -L/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/lib/../lib -L/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/lib --no-warn-mismatch CMakeFiles/cmTC_8af98.dir/CMakeCXXCompilerABI.cpp.o -Bstatic -lc++ -Bdynamic -lm /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/14.0.6/lib/linux/libclang_rt.builtins-arm-android.a -l:libunwind.a -ldl -lc /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/14.0.6/lib/linux/libclang_rt.builtins-arm-android.a -l:libunwind.a -ldl /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/lib/arm-linux-androideabi/19/crtend_android.o
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.26.3/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:127 (message)"
+      - "/opt/homebrew/Cellar/cmake/3.26.3/share/cmake/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:9 (project)"
+    message: |
+      Parsed CXX implicit include dir info: rv=done
+        found start of include info
+        found start of implicit include info
+          add: [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/include/c++/v1]
+          add: [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/14.0.6/include]
+          add: [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/local/include]
+          add: [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/include/arm-linux-androideabi]
+          add: [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/include]
+        end of search list found
+        collapse include dir [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/include/c++/v1] ==> [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1]
+        collapse include dir [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/14.0.6/include] ==> [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/14.0.6/include]
+        collapse include dir [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/local/include] ==> [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/local/include]
+        collapse include dir [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/include/arm-linux-androideabi] ==> [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/arm-linux-androideabi]
+        collapse include dir [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/include] ==> [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include]
+        implicit include dirs: [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1;/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/14.0.6/include;/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/local/include;/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/arm-linux-androideabi;/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include]
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.26.3/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:152 (message)"
+      - "/opt/homebrew/Cellar/cmake/3.26.3/share/cmake/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:9 (project)"
+    message: |
+      Parsed CXX implicit link information:
+        link line regex: [^( *|.*[/\\])(ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        ignore line: [Change Dir: /Users/wei/Desktop/filament-PowerVR/out/cmake-android-release-arm7/CMakeFiles/CMakeScratch/TryCompile-oJrKGH]
+        ignore line: []
+        ignore line: [Run Build Command(s):/opt/homebrew/bin/ninja -v cmTC_8af98 && [1/2] /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/armv7a-linux-androideabi19-clang++   -mthumb -march=armv7-a -mcpu=cortex-a15 -mfloat-abi=softfp -mfpu=neon-vfpv4 -fPIE  -fPIE   -v -MD -MT CMakeFiles/cmTC_8af98.dir/CMakeCXXCompilerABI.cpp.o -MF CMakeFiles/cmTC_8af98.dir/CMakeCXXCompilerABI.cpp.o.d -o CMakeFiles/cmTC_8af98.dir/CMakeCXXCompilerABI.cpp.o -c /opt/homebrew/Cellar/cmake/3.26.3/share/cmake/Modules/CMakeCXXCompilerABI.cpp]
+        ignore line: [Android (8490178  based on r450784d) clang version 14.0.6 (https://android.googlesource.com/toolchain/llvm-project 4c603efb0cca074e9238af8b4106c30add4418f6)]
+        ignore line: [Target: armv7a-unknown-linux-android19]
+        ignore line: [Thread model: posix]
+        ignore line: [InstalledDir: /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin]
+        ignore line: [ (in-process)]
+        ignore line: [ "/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang-14" -cc1 -triple thumbv7-unknown-linux-android19 -emit-obj -mrelax-all --mrelax-relocations -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCXXCompilerABI.cpp -mrelocation-model pic -pic-level 2 -pic-is-pie -mframe-pointer=all -ffp-contract=on -fno-rounding-math -mconstructor-aliases -target-cpu cortex-a15 -target-feature +soft-float-abi -target-feature -crc -target-feature -dotprod -target-feature +dsp -target-feature -mve -target-feature -mve.fp -target-feature -ras -target-feature -bf16 -target-feature -sb -target-feature -i8mm -target-feature -lob -target-feature -cdecp0 -target-feature -cdecp1 -target-feature -cdecp2 -target-feature -cdecp3 -target-feature -cdecp4 -target-feature -cdecp5 -target-feature -cdecp6 -target-feature -cdecp7 -target-feature -pacbti -target-feature +hwdiv-arm -target-feature +hwdiv -target-feature +vfp2 -target-feature +vfp2sp -target-feature +vfp3 -target-feature +vfp3d16 -target-feature +vfp3d16sp -target-feature +vfp3sp -target-feature +fp16 -target-feature +vfp4 -target-feature +vfp4d16 -target-feature +vfp4d16sp -target-feature +vfp4sp -target-feature -fp-armv8 -target-feature -fp-armv8d16 -target-feature -fp-armv8d16sp -target-feature -fp-armv8sp -target-feature -fullfp16 -target-feature +fp64 -target-feature +d32 -target-feature +neon -target-feature -fp16fml -target-feature -crypto -target-feature -sha2 -target-feature -aes -target-abi aapcs-linux -mfloat-abi soft -fallow-half-arguments-and-returns -mllvm -treat-scalable-fixed-error-as-warning -debugger-tuning=gdb -target-linker-version 14.0.6 -v -fcoverage-compilation-dir=/Users/wei/Desktop/filament-PowerVR/out/cmake-android-release-arm7/CMakeFiles/CMakeScratch/TryCompile-oJrKGH -resource-dir /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/14.0.6 -dependency-file CMakeFiles/cmTC_8af98.dir/CMakeCXXCompilerABI.cpp.o.d -MT CMakeFiles/cmTC_8af98.dir/CMakeCXXCompilerABI.cpp.o -sys-header-deps -internal-isystem /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/include/c++/v1 -internal-isystem /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/14.0.6/include -internal-isystem /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/local/include -internal-externc-isystem /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/include/arm-linux-androideabi -internal-externc-isystem /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/include -internal-externc-isystem /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/include -fdeprecated-macro -fdebug-compilation-dir=/Users/wei/Desktop/filament-PowerVR/out/cmake-android-release-arm7/CMakeFiles/CMakeScratch/TryCompile-oJrKGH -ferror-limit 19 -fno-signed-char -fgnuc-version=4.2.1 -fcxx-exceptions -fexceptions -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_8af98.dir/CMakeCXXCompilerABI.cpp.o -x c++ /opt/homebrew/Cellar/cmake/3.26.3/share/cmake/Modules/CMakeCXXCompilerABI.cpp]
+        ignore line: [clang -cc1 version 14.0.6 based upon LLVM 14.0.6git default target x86_64-apple-darwin22.4.0]
+        ignore line: [ignoring nonexistent directory "/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/include"]
+        ignore line: [#include "..." search starts here:]
+        ignore line: [#include <...> search starts here:]
+        ignore line: [ /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/include/c++/v1]
+        ignore line: [ /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/14.0.6/include]
+        ignore line: [ /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/local/include]
+        ignore line: [ /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/include/arm-linux-androideabi]
+        ignore line: [ /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/include]
+        ignore line: [End of search list.]
+        ignore line: [[2/2] : && /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/armv7a-linux-androideabi19-clang++ -mthumb -march=armv7-a -mcpu=cortex-a15 -mfloat-abi=softfp -mfpu=neon-vfpv4 -fPIE -march=armv7-a -Wl --no-warn-mismatch -L/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/arm-linux-androideabi/lib/armv7-a -static-libstdc++ -fPIE -pie -v CMakeFiles/cmTC_8af98.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_8af98   && :]
+        ignore line: [Android (8490178  based on r450784d) clang version 14.0.6 (https://android.googlesource.com/toolchain/llvm-project 4c603efb0cca074e9238af8b4106c30add4418f6)]
+        ignore line: [Target: armv7a-unknown-linux-android19]
+        ignore line: [Thread model: posix]
+        ignore line: [InstalledDir: /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin]
+        link line: [ "/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/ld" -pie -EL --warn-shared-textrel -z now -z relro -z max-page-size=4096 -X --hash-style=both --enable-new-dtags --eh-frame-hdr -m armelf_linux_eabi -dynamic-linker /system/bin/linker -o cmTC_8af98 /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/lib/arm-linux-androideabi/19/crtbegin_dynamic.o -L/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/arm-linux-androideabi/lib/armv7-a -L/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/14.0.6/lib/linux/arm -L/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/lib/arm-linux-androideabi/19 -L/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/lib/arm-linux-androideabi -L/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/lib/../lib -L/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/lib --no-warn-mismatch CMakeFiles/cmTC_8af98.dir/CMakeCXXCompilerABI.cpp.o -Bstatic -lc++ -Bdynamic -lm /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/14.0.6/lib/linux/libclang_rt.builtins-arm-android.a -l:libunwind.a -ldl -lc /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/14.0.6/lib/linux/libclang_rt.builtins-arm-android.a -l:libunwind.a -ldl /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/lib/arm-linux-androideabi/19/crtend_android.o]
+          arg [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/ld] ==> ignore
+          arg [-pie] ==> ignore
+          arg [-EL] ==> ignore
+          arg [--warn-shared-textrel] ==> ignore
+          arg [-znow] ==> ignore
+          arg [-zrelro] ==> ignore
+          arg [-zmax-page-size=4096] ==> ignore
+          arg [-X] ==> ignore
+          arg [--hash-style=both] ==> ignore
+          arg [--enable-new-dtags] ==> ignore
+          arg [--eh-frame-hdr] ==> ignore
+          arg [-m] ==> ignore
+          arg [armelf_linux_eabi] ==> ignore
+          arg [-dynamic-linker] ==> ignore
+          arg [/system/bin/linker] ==> ignore
+          arg [-o] ==> ignore
+          arg [cmTC_8af98] ==> ignore
+          arg [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/lib/arm-linux-androideabi/19/crtbegin_dynamic.o] ==> obj [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/lib/arm-linux-androideabi/19/crtbegin_dynamic.o]
+          arg [-L/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/arm-linux-androideabi/lib/armv7-a] ==> dir [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/arm-linux-androideabi/lib/armv7-a]
+          arg [-L/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/14.0.6/lib/linux/arm] ==> dir [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/14.0.6/lib/linux/arm]
+          arg [-L/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/lib/arm-linux-androideabi/19] ==> dir [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/lib/arm-linux-androideabi/19]
+          arg [-L/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/lib/arm-linux-androideabi] ==> dir [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/lib/arm-linux-androideabi]
+          arg [-L/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/lib/../lib] ==> dir [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/lib/../lib]
+          arg [-L/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/lib] ==> dir [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/lib]
+          arg [--no-warn-mismatch] ==> ignore
+          arg [CMakeFiles/cmTC_8af98.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
+          arg [-Bstatic] ==> search static
+          arg [-lc++] ==> lib [c++]
+          arg [-Bdynamic] ==> search dynamic
+          arg [-lm] ==> lib [m]
+          arg [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/14.0.6/lib/linux/libclang_rt.builtins-arm-android.a] ==> lib [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/14.0.6/lib/linux/libclang_rt.builtins-arm-android.a]
+          arg [-l:libunwind.a] ==> lib [-l:libunwind.a]
+          arg [-ldl] ==> lib [dl]
+          arg [-lc] ==> lib [c]
+          arg [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/14.0.6/lib/linux/libclang_rt.builtins-arm-android.a] ==> lib [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/14.0.6/lib/linux/libclang_rt.builtins-arm-android.a]
+          arg [-l:libunwind.a] ==> lib [-l:libunwind.a]
+          arg [-ldl] ==> lib [dl]
+          arg [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/lib/arm-linux-androideabi/19/crtend_android.o] ==> obj [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/lib/arm-linux-androideabi/19/crtend_android.o]
+        remove lib [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/14.0.6/lib/linux/libclang_rt.builtins-arm-android.a]
+        remove lib [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/14.0.6/lib/linux/libclang_rt.builtins-arm-android.a]
+        collapse obj [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/lib/arm-linux-androideabi/19/crtbegin_dynamic.o] ==> [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/arm-linux-androideabi/19/crtbegin_dynamic.o]
+        collapse obj [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/lib/arm-linux-androideabi/19/crtend_android.o] ==> [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/arm-linux-androideabi/19/crtend_android.o]
+        collapse library dir [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/arm-linux-androideabi/lib/armv7-a] ==> [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/arm-linux-androideabi/lib/armv7-a]
+        collapse library dir [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/14.0.6/lib/linux/arm] ==> [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/14.0.6/lib/linux/arm]
+        collapse library dir [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/lib/arm-linux-androideabi/19] ==> [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/arm-linux-androideabi/19]
+        collapse library dir [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/lib/arm-linux-androideabi] ==> [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/arm-linux-androideabi]
+        collapse library dir [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/lib/../lib] ==> [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib]
+        collapse library dir [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/../sysroot/usr/lib] ==> [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib]
+        implicit libs: [c++;m;-l:libunwind.a;dl;c;-l:libunwind.a;dl]
+        implicit objs: [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/arm-linux-androideabi/19/crtbegin_dynamic.o;/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/arm-linux-androideabi/19/crtend_android.o]
+        implicit dirs: [/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/arm-linux-androideabi/lib/armv7-a;/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/14.0.6/lib/linux/arm;/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/arm-linux-androideabi/19;/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/arm-linux-androideabi;/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib]
+        implicit fwks: []
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.26.3/share/cmake/Modules/CMakeDetermineCompilerId.cmake:1115 (message)"
+      - "/opt/homebrew/Cellar/cmake/3.26.3/share/cmake/Modules/CMakeDetermineASMCompiler.cmake:127 (CMAKE_DETERMINE_COMPILER_ID_VENDOR)"
+      - "libs/filagui/CMakeLists.txt:2 (project)"
+    message: |
+      Checking whether the ASM compiler is GNU using "--version" did not match "(GNU assembler)|(GCC)|(Free Software Foundation)":
+      Android (8490178, based on r450784d) clang version 14.0.6 (https://android.googlesource.com/toolchain/llvm-project 4c603efb0cca074e9238af8b4106c30add4418f6)
+      Target: armv7a-unknown-linux-android19
+      Thread model: posix
+      InstalledDir: /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.26.3/share/cmake/Modules/CMakeDetermineCompilerId.cmake:1102 (message)"
+      - "/opt/homebrew/Cellar/cmake/3.26.3/share/cmake/Modules/CMakeDetermineASMCompiler.cmake:127 (CMAKE_DETERMINE_COMPILER_ID_VENDOR)"
+      - "libs/filagui/CMakeLists.txt:2 (project)"
+    message: |
+      Checking whether the ASM compiler is Clang using "--version" matched "(clang version)":
+      Android (8490178, based on r450784d) clang version 14.0.6 (https://android.googlesource.com/toolchain/llvm-project 4c603efb0cca074e9238af8b4106c30add4418f6)
+      Target: armv7a-unknown-linux-android19
+      Thread model: posix
+      InstalledDir: /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.26.3/share/cmake/Modules/Internal/CheckSourceCompiles.cmake:101 (try_compile)"
+      - "/opt/homebrew/Cellar/cmake/3.26.3/share/cmake/Modules/CheckCSourceCompiles.cmake:76 (cmake_check_source_compiles)"
+      - "/opt/homebrew/Cellar/cmake/3.26.3/share/cmake/Modules/FindThreads.cmake:97 (CHECK_C_SOURCE_COMPILES)"
+      - "/opt/homebrew/Cellar/cmake/3.26.3/share/cmake/Modules/FindThreads.cmake:163 (_threads_check_libc)"
+      - "third_party/glslang/glslang/OSDependent/Unix/CMakeLists.txt:46 (find_package)"
+    checks:
+      - "Performing Test CMAKE_HAVE_LIBC_PTHREAD"
+    directories:
+      source: "/Users/wei/Desktop/filament-PowerVR/out/cmake-android-release-arm7/CMakeFiles/CMakeScratch/TryCompile-t7TCF5"
+      binary: "/Users/wei/Desktop/filament-PowerVR/out/cmake-android-release-arm7/CMakeFiles/CMakeScratch/TryCompile-t7TCF5"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " -mthumb -march=armv7-a -mcpu=cortex-a15 -mfloat-abi=softfp -mfpu=neon-vfpv4 -fPIE -fcolor-diagnostics -fvisibility=hidden"
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: "    -march=armv7-a -Wl,--no-warn-mismatch -L/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/arm-linux-androideabi/lib/armv7-a -static-libstdc++ -fPIE -pie -Wl,--gc-sections"
+      CMAKE_POSITION_INDEPENDENT_CODE: "ON"
+    buildResult:
+      variable: "CMAKE_HAVE_LIBC_PTHREAD"
+      cached: true
+      stdout: |
+        Change Dir: /Users/wei/Desktop/filament-PowerVR/out/cmake-android-release-arm7/CMakeFiles/CMakeScratch/TryCompile-t7TCF5
+        
+        Run Build Command(s):/opt/homebrew/bin/ninja -v cmTC_d1194 && [1/2] /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/armv7a-linux-androideabi19-clang -DCMAKE_HAVE_LIBC_PTHREAD  -mthumb -march=armv7-a -mcpu=cortex-a15 -mfloat-abi=softfp -mfpu=neon-vfpv4 -fPIE -fcolor-diagnostics -fvisibility=hidden  -fPIE -MD -MT CMakeFiles/cmTC_d1194.dir/src.c.o -MF CMakeFiles/cmTC_d1194.dir/src.c.o.d -o CMakeFiles/cmTC_d1194.dir/src.c.o -c /Users/wei/Desktop/filament-PowerVR/out/cmake-android-release-arm7/CMakeFiles/CMakeScratch/TryCompile-t7TCF5/src.c
+        /Users/wei/Desktop/filament-PowerVR/out/cmake-android-release-arm7/CMakeFiles/CMakeScratch/TryCompile-t7TCF5/src.c:13:3: warning: implicit declaration of function 'pthread_cancel' is invalid in C99 [-Wimplicit-function-declaration]
+          pthread_cancel(thread);
+          ^
+        1 warning generated.
+        [2/2] : && /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/armv7a-linux-androideabi19-clang -mthumb -march=armv7-a -mcpu=cortex-a15 -mfloat-abi=softfp -mfpu=neon-vfpv4 -fPIE -fcolor-diagnostics -fvisibility=hidden -march=armv7-a -Wl,--no-warn-mismatch -L/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/arm-linux-androideabi/lib/armv7-a -static-libstdc++ -fPIE -pie -Wl,--gc-sections CMakeFiles/cmTC_d1194.dir/src.c.o -o cmTC_d1194   && :
+        FAILED: cmTC_d1194 
+        : && /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/armv7a-linux-androideabi19-clang -mthumb -march=armv7-a -mcpu=cortex-a15 -mfloat-abi=softfp -mfpu=neon-vfpv4 -fPIE -fcolor-diagnostics -fvisibility=hidden -march=armv7-a -Wl,--no-warn-mismatch -L/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/arm-linux-androideabi/lib/armv7-a -static-libstdc++ -fPIE -pie -Wl,--gc-sections CMakeFiles/cmTC_d1194.dir/src.c.o -o cmTC_d1194   && :
+        clang-14: warning: argument unused during compilation: '-static-libstdc++' [-Wunused-command-line-argument]
+        ld: error: undefined symbol: pthread_cancel
+        >>> referenced by src.c
+        >>>               CMakeFiles/cmTC_d1194.dir/src.c.o:(main)
+        clang-14: error: linker command failed with exit code 1 (use -v to see invocation)
+        ninja: build stopped: subcommand failed.
+        
+      exitCode: 1
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.26.3/share/cmake/Modules/CheckLibraryExists.cmake:71 (try_compile)"
+      - "/opt/homebrew/Cellar/cmake/3.26.3/share/cmake/Modules/FindThreads.cmake:112 (CHECK_LIBRARY_EXISTS)"
+      - "/opt/homebrew/Cellar/cmake/3.26.3/share/cmake/Modules/FindThreads.cmake:175 (_threads_check_lib)"
+      - "third_party/glslang/glslang/OSDependent/Unix/CMakeLists.txt:46 (find_package)"
+    checks:
+      - "Looking for pthread_create in pthreads"
+    directories:
+      source: "/Users/wei/Desktop/filament-PowerVR/out/cmake-android-release-arm7/CMakeFiles/CMakeScratch/TryCompile-ZYZmGX"
+      binary: "/Users/wei/Desktop/filament-PowerVR/out/cmake-android-release-arm7/CMakeFiles/CMakeScratch/TryCompile-ZYZmGX"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " -mthumb -march=armv7-a -mcpu=cortex-a15 -mfloat-abi=softfp -mfpu=neon-vfpv4 -fPIE -fcolor-diagnostics -fvisibility=hidden"
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: "    -march=armv7-a -Wl,--no-warn-mismatch -L/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/arm-linux-androideabi/lib/armv7-a -static-libstdc++ -fPIE -pie -Wl,--gc-sections"
+      CMAKE_POSITION_INDEPENDENT_CODE: "ON"
+    buildResult:
+      variable: "CMAKE_HAVE_PTHREADS_CREATE"
+      cached: true
+      stdout: |
+        Change Dir: /Users/wei/Desktop/filament-PowerVR/out/cmake-android-release-arm7/CMakeFiles/CMakeScratch/TryCompile-ZYZmGX
+        
+        Run Build Command(s):/opt/homebrew/bin/ninja -v cmTC_155ca && [1/2] /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/armv7a-linux-androideabi19-clang   -mthumb -march=armv7-a -mcpu=cortex-a15 -mfloat-abi=softfp -mfpu=neon-vfpv4 -fPIE -fcolor-diagnostics -fvisibility=hidden -DCHECK_FUNCTION_EXISTS=pthread_create -fPIE -MD -MT CMakeFiles/cmTC_155ca.dir/CheckFunctionExists.c.o -MF CMakeFiles/cmTC_155ca.dir/CheckFunctionExists.c.o.d -o CMakeFiles/cmTC_155ca.dir/CheckFunctionExists.c.o -c /Users/wei/Desktop/filament-PowerVR/out/cmake-android-release-arm7/CMakeFiles/CMakeScratch/TryCompile-ZYZmGX/CheckFunctionExists.c
+        [2/2] : && /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/armv7a-linux-androideabi19-clang -mthumb -march=armv7-a -mcpu=cortex-a15 -mfloat-abi=softfp -mfpu=neon-vfpv4 -fPIE -fcolor-diagnostics -fvisibility=hidden -DCHECK_FUNCTION_EXISTS=pthread_create -march=armv7-a -Wl,--no-warn-mismatch -L/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/arm-linux-androideabi/lib/armv7-a -static-libstdc++ -fPIE -pie -Wl,--gc-sections CMakeFiles/cmTC_155ca.dir/CheckFunctionExists.c.o -o cmTC_155ca  -lpthreads && :
+        FAILED: cmTC_155ca 
+        : && /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/armv7a-linux-androideabi19-clang -mthumb -march=armv7-a -mcpu=cortex-a15 -mfloat-abi=softfp -mfpu=neon-vfpv4 -fPIE -fcolor-diagnostics -fvisibility=hidden -DCHECK_FUNCTION_EXISTS=pthread_create -march=armv7-a -Wl,--no-warn-mismatch -L/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/arm-linux-androideabi/lib/armv7-a -static-libstdc++ -fPIE -pie -Wl,--gc-sections CMakeFiles/cmTC_155ca.dir/CheckFunctionExists.c.o -o cmTC_155ca  -lpthreads && :
+        clang-14: warning: argument unused during compilation: '-static-libstdc++' [-Wunused-command-line-argument]
+        ld: error: unable to find library -lpthreads
+        clang-14: error: linker command failed with exit code 1 (use -v to see invocation)
+        ninja: build stopped: subcommand failed.
+        
+      exitCode: 1
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.26.3/share/cmake/Modules/CheckLibraryExists.cmake:71 (try_compile)"
+      - "/opt/homebrew/Cellar/cmake/3.26.3/share/cmake/Modules/FindThreads.cmake:112 (CHECK_LIBRARY_EXISTS)"
+      - "/opt/homebrew/Cellar/cmake/3.26.3/share/cmake/Modules/FindThreads.cmake:176 (_threads_check_lib)"
+      - "third_party/glslang/glslang/OSDependent/Unix/CMakeLists.txt:46 (find_package)"
+    checks:
+      - "Looking for pthread_create in pthread"
+    directories:
+      source: "/Users/wei/Desktop/filament-PowerVR/out/cmake-android-release-arm7/CMakeFiles/CMakeScratch/TryCompile-ZuAEUc"
+      binary: "/Users/wei/Desktop/filament-PowerVR/out/cmake-android-release-arm7/CMakeFiles/CMakeScratch/TryCompile-ZuAEUc"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " -mthumb -march=armv7-a -mcpu=cortex-a15 -mfloat-abi=softfp -mfpu=neon-vfpv4 -fPIE -fcolor-diagnostics -fvisibility=hidden"
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: "    -march=armv7-a -Wl,--no-warn-mismatch -L/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/arm-linux-androideabi/lib/armv7-a -static-libstdc++ -fPIE -pie -Wl,--gc-sections"
+      CMAKE_POSITION_INDEPENDENT_CODE: "ON"
+    buildResult:
+      variable: "CMAKE_HAVE_PTHREAD_CREATE"
+      cached: true
+      stdout: |
+        Change Dir: /Users/wei/Desktop/filament-PowerVR/out/cmake-android-release-arm7/CMakeFiles/CMakeScratch/TryCompile-ZuAEUc
+        
+        Run Build Command(s):/opt/homebrew/bin/ninja -v cmTC_0a56c && [1/2] /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/armv7a-linux-androideabi19-clang   -mthumb -march=armv7-a -mcpu=cortex-a15 -mfloat-abi=softfp -mfpu=neon-vfpv4 -fPIE -fcolor-diagnostics -fvisibility=hidden -DCHECK_FUNCTION_EXISTS=pthread_create -fPIE -MD -MT CMakeFiles/cmTC_0a56c.dir/CheckFunctionExists.c.o -MF CMakeFiles/cmTC_0a56c.dir/CheckFunctionExists.c.o.d -o CMakeFiles/cmTC_0a56c.dir/CheckFunctionExists.c.o -c /Users/wei/Desktop/filament-PowerVR/out/cmake-android-release-arm7/CMakeFiles/CMakeScratch/TryCompile-ZuAEUc/CheckFunctionExists.c
+        [2/2] : && /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/armv7a-linux-androideabi19-clang -mthumb -march=armv7-a -mcpu=cortex-a15 -mfloat-abi=softfp -mfpu=neon-vfpv4 -fPIE -fcolor-diagnostics -fvisibility=hidden -DCHECK_FUNCTION_EXISTS=pthread_create -march=armv7-a -Wl,--no-warn-mismatch -L/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/arm-linux-androideabi/lib/armv7-a -static-libstdc++ -fPIE -pie -Wl,--gc-sections CMakeFiles/cmTC_0a56c.dir/CheckFunctionExists.c.o -o cmTC_0a56c  -lpthread && :
+        FAILED: cmTC_0a56c 
+        : && /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/armv7a-linux-androideabi19-clang -mthumb -march=armv7-a -mcpu=cortex-a15 -mfloat-abi=softfp -mfpu=neon-vfpv4 -fPIE -fcolor-diagnostics -fvisibility=hidden -DCHECK_FUNCTION_EXISTS=pthread_create -march=armv7-a -Wl,--no-warn-mismatch -L/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/arm-linux-androideabi/lib/armv7-a -static-libstdc++ -fPIE -pie -Wl,--gc-sections CMakeFiles/cmTC_0a56c.dir/CheckFunctionExists.c.o -o cmTC_0a56c  -lpthread && :
+        clang-14: warning: argument unused during compilation: '-static-libstdc++' [-Wunused-command-line-argument]
+        ld: error: unable to find library -lpthread
+        clang-14: error: linker command failed with exit code 1 (use -v to see invocation)
+        ninja: build stopped: subcommand failed.
+        
+      exitCode: 1
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.26.3/share/cmake/Modules/FindThreads.cmake:136 (try_compile)"
+      - "/opt/homebrew/Cellar/cmake/3.26.3/share/cmake/Modules/FindThreads.cmake:179 (_threads_check_flag_pthread)"
+      - "third_party/glslang/glslang/OSDependent/Unix/CMakeLists.txt:46 (find_package)"
+    checks:
+      - "Check if compiler accepts -pthread"
+    directories:
+      source: "/Users/wei/Desktop/filament-PowerVR/out/cmake-android-release-arm7/CMakeFiles/CMakeScratch/TryCompile-c9FLiU"
+      binary: "/Users/wei/Desktop/filament-PowerVR/out/cmake-android-release-arm7/CMakeFiles/CMakeScratch/TryCompile-c9FLiU"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " -mthumb -march=armv7-a -mcpu=cortex-a15 -mfloat-abi=softfp -mfpu=neon-vfpv4 -fPIE -fcolor-diagnostics -fvisibility=hidden"
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: "    -march=armv7-a -Wl,--no-warn-mismatch -L/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/arm-linux-androideabi/lib/armv7-a -static-libstdc++ -fPIE -pie -Wl,--gc-sections"
+      CMAKE_POSITION_INDEPENDENT_CODE: "ON"
+    buildResult:
+      variable: "THREADS_HAVE_PTHREAD_ARG"
+      cached: true
+      stdout: |
+        Change Dir: /Users/wei/Desktop/filament-PowerVR/out/cmake-android-release-arm7/CMakeFiles/CMakeScratch/TryCompile-c9FLiU
+        
+        Run Build Command(s):/opt/homebrew/bin/ninja -v cmTC_775be && [1/2] /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/armv7a-linux-androideabi19-clang   -mthumb -march=armv7-a -mcpu=cortex-a15 -mfloat-abi=softfp -mfpu=neon-vfpv4 -fPIE -fcolor-diagnostics -fvisibility=hidden  -fPIE -MD -MT CMakeFiles/cmTC_775be.dir/CheckForPthreads.c.o -MF CMakeFiles/cmTC_775be.dir/CheckForPthreads.c.o.d -o CMakeFiles/cmTC_775be.dir/CheckForPthreads.c.o -c /Users/wei/Desktop/filament-PowerVR/out/cmake-android-release-arm7/CMakeFiles/CMakeScratch/TryCompile-c9FLiU/CheckForPthreads.c
+        [2/2] : && /Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/armv7a-linux-androideabi19-clang -mthumb -march=armv7-a -mcpu=cortex-a15 -mfloat-abi=softfp -mfpu=neon-vfpv4 -fPIE -fcolor-diagnostics -fvisibility=hidden -march=armv7-a -Wl,--no-warn-mismatch -L/Users/wei/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/arm-linux-androideabi/lib/armv7-a -static-libstdc++ -fPIE -pie -Wl,--gc-sections CMakeFiles/cmTC_775be.dir/CheckForPthreads.c.o -o cmTC_775be  -pthread && :
+        clang-14: warning: argument unused during compilation: '-static-libstdc++' [-Wunused-command-line-argument]
+        
+      exitCode: 0
+...
