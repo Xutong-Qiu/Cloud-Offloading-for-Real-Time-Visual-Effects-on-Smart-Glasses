@@ -12,6 +12,8 @@ import com.google.android.filament.*
 import com.google.android.filament.android.DisplayHelper
 //import com.google.android.filament.android.FilamentHelper
 import com.google.android.filament.android.UiHelper
+import com.google.android.filament.ibl.Ibl
+import com.google.android.filament.ibl.loadIbl
 import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
@@ -42,12 +44,14 @@ class MainActivity : Activity() {
     private lateinit var view: View
     // Should be pretty obvious :)
     private lateinit var camera: Camera
-
+    private lateinit var mesh: Mesh
+    private lateinit var ibl: Ibl
     private lateinit var material: Material
     private lateinit var vertexBuffer: VertexBuffer
     private lateinit var indexBuffer: IndexBuffer
+    private lateinit var materialInstance: MaterialInstance
     @Entity private var renderable = 0
-
+    @Entity private var light = 0
     // A swap chain is Filament's representation of a surface
     private var swapChain: SwapChain? = null
 
@@ -61,6 +65,7 @@ class MainActivity : Activity() {
         setContentView(surfaceView)
         choreographer = Choreographer.getInstance()
         displayHelper = DisplayHelper(this)
+
         setupSurfaceView()
         setupFilament()
         setupView()
@@ -69,6 +74,8 @@ class MainActivity : Activity() {
     }
 
     private fun setupSurfaceView() {
+
+
         uiHelper = UiHelper(UiHelper.ContextErrorPolicy.DONT_CHECK)
         uiHelper.renderCallback = SurfaceCallback()
         uiHelper.attachTo(surfaceView)
@@ -83,15 +90,19 @@ class MainActivity : Activity() {
     }
 
     private fun setupView() {
-        scene.skybox = Skybox.Builder().color(0.035f, 0.035f, 0.035f, 1.0f).build(engine)
+        val ssaoOptions = view.ambientOcclusionOptions
+        ssaoOptions.enabled = true
+        view.ambientOcclusionOptions = ssaoOptions
 
-        if (engine.activeFeatureLevel == Engine.FeatureLevel.FEATURE_LEVEL_0) {
-            // post-processing is not supported at feature level 0
-            view.isPostProcessingEnabled = false
-        } else {
-            // NOTE: Try to disable post-processing (tone-mapping, etc.) to see the difference
-            // view.isPostProcessingEnabled = false
-        }
+//        scene.skybox = Skybox.Builder().color(0.048f, 0.051f, 0.031f, 1.0f).build(engine)
+//
+//        if (engine.activeFeatureLevel == Engine.FeatureLevel.FEATURE_LEVEL_0) {
+//            // post-processing is not supported at feature level 0
+//            view.isPostProcessingEnabled = false
+//        } else {
+//            // NOTE: Try to disable post-processing (tone-mapping, etc.) to see the difference
+//            // view.isPostProcessingEnabled = false
+//        }
 
         // Tell the view which camera we want to use
         view.camera = camera
@@ -102,7 +113,15 @@ class MainActivity : Activity() {
 
     private fun setupScene() {
         loadMaterial()
+        setupMaterial()
         createMesh()
+        loadImageBasedLight()
+        // To create a renderable we first create a generic entity
+        scene.skybox = ibl.skybox
+        scene.indirectLight = ibl.indirectLight
+
+        val materials = mapOf("DefaultMaterial" to materialInstance)
+        mesh = loadMesh(assets, "models/shader_ball.filamesh", materials, engine)
 
         // To create a renderable we first create a generic entity
         renderable = EntityManager.get().create()
@@ -118,28 +137,67 @@ class MainActivity : Activity() {
             .material(0, material.defaultInstance)
             .build(engine, renderable)
 
+        engine.transformManager.setTransform(engine.transformManager.getInstance(mesh.renderable),
+            floatArrayOf(
+                1.0f,  0.0f, 0.0f, 0.0f,
+                0.0f,  1.0f, 0.0f, 0.0f,
+                0.0f,  0.0f, 1.0f, 0.0f,
+                0.0f,  0.0f, -10.0f, 1.0f
+            ))
         // Add the entity to the scene to render it
         scene.addEntity(renderable)
+
+        ////////////////////////////////////////////////////////////////
+        // Filament uses column-major matrices
+        engine.transformManager.setTransform(engine.transformManager.getInstance(mesh.renderable),
+            floatArrayOf(
+                1.0f,  0.0f, 0.0f, 0.0f,
+                0.0f,  1.0f, 0.0f, 0.0f,
+                0.0f,  0.0f, 1.0f, 0.0f,
+                0.0f,  0.0f, -10.0f, 1.0f
+            ))
+
+        // Add the entity to the scene to render it
+        scene.addEntity(mesh.renderable)
+
+        ////////////////////////////////////////////////////////////////
+        light = EntityManager.get().create()
+        val (r, g, b) = Colors.cct(6_500.0f)
+        LightManager.Builder(LightManager.Type.DIRECTIONAL)
+            .color(r, g, b)
+            // Intensity of the sun in lux on a clear day
+            .intensity(110_000.0f)
+            // The direction is normalized on our behalf
+            .direction(-0.753f, -1.0f, 0.890f)
+            .castShadows(true)
+            .build(engine, light)
+
+        // Add the entity to the scene to light it
+        scene.addEntity(light)
+
+        // Add the entity to the scene to render it
+        camera.setExposure(16.0f, 1.0f / 125.0f, 100.0f)
 
         startAnimation()
     }
 
     private fun loadMaterial() {
-        var name = "materials/baked_color.filamat"
+        val name = "materials/clear_coat.filamat"
+        readUncompressedAsset(name).let {
+            material = Material.Builder().payload(it, it.remaining()).build(engine)
+        }
         //if (engine.activeFeatureLevel == Engine.FeatureLevel.FEATURE_LEVEL_0) {
             //name = "materials/baked_color_es2.filamat"
         //}
-        val buffer = readUncompressedAsset(name)
-        buffer.let {
-            val remainingBytes = it.remaining()
-            val materialBuilder = Material.Builder()
-            val materialPayload = materialBuilder.payload(it, remainingBytes)
-            material = materialPayload.build(engine)//
-
-        }
-//        readUncompressedAsset(name).let {
-//            material = Material.Builder().payload(it, it.remaining()).build(engine)
+//        val buffer = readUncompressedAsset(name)
+//        buffer.let {
+//            val remainingBytes = it.remaining()
+//            val materialBuilder = Material.Builder()
+//            val materialPayload = materialBuilder.payload(it, remainingBytes)
+//            material = materialPayload.build(engine)//
+//
 //        }
+
     }
 
     private fun createMesh() {
@@ -207,6 +265,21 @@ class MainActivity : Activity() {
         indexBuffer.setBuffer(engine, indexData)
     }
 
+
+    private fun setupMaterial() {
+        // Create an instance of the material to set different parameters on it
+        materialInstance = material.createInstance()
+        // Specify that our color is in sRGB so the conversion to linear
+        // is done automatically for us. If you already have a linear color
+        // you can pass it directly, or use Colors.RgbType.LINEAR
+        materialInstance.setParameter("baseColor", Colors.RgbType.SRGB, 0.71f, 0.0f, 0.0f)
+    }
+
+    private fun loadImageBasedLight() {
+        ibl = loadIbl(assets, "flower_road_no_sun_2k", engine)
+        ibl.indirectLight.intensity = 40_000.0f
+    }
+
     private fun startAnimation() {
         // Animate the triangle
         animator.interpolator = LinearInterpolator()
@@ -221,6 +294,8 @@ class MainActivity : Activity() {
                 tcm.setTransform(tcm.getInstance(renderable), transformMatrix)
             }
         })
+        //this is the default value
+        camera.lookAt(0.0, 0.0, 0.0, 0.0, 0.0, -1.0, 0.0, 1.0, 0.0)
         animator.start()
     }
 
@@ -314,14 +389,11 @@ class MainActivity : Activity() {
         }
 
         override fun onResized(width: Int, height: Int) {
-            val zoom = 1.5
             val aspect = width.toDouble() / height.toDouble()
-            camera.setProjection(Camera.Projection.ORTHO,
-                -aspect * zoom, aspect * zoom, -zoom, zoom, 0.0, 10.0)
+            camera.setProjection(45.0, aspect, 0.1, 20.0, Camera.Fov.VERTICAL)
 
             view.viewport = Viewport(0, 0, width, height)
 
-            //FilamentHelper.synchronizePendingFrames(engine)
         }
     }
 
