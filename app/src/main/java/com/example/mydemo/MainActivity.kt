@@ -44,12 +44,13 @@ class MainActivity : Activity() {
     private lateinit var view: View
     // Should be pretty obvious :)
     private lateinit var camera: Camera
-    private lateinit var mesh: Mesh
+    //private lateinit var mesh: Mesh
     private lateinit var ibl: Ibl
     private lateinit var material: Material
+    private lateinit var materialInstance: MaterialInstance
     private lateinit var vertexBuffer: VertexBuffer
     private lateinit var indexBuffer: IndexBuffer
-    private lateinit var materialInstance: MaterialInstance
+    //private lateinit var materialInstance: MaterialInstance
     @Entity private var renderable = 0
     @Entity private var light = 0
     // A swap chain is Filament's representation of a surface
@@ -74,8 +75,6 @@ class MainActivity : Activity() {
     }
 
     private fun setupSurfaceView() {
-
-
         uiHelper = UiHelper(UiHelper.ContextErrorPolicy.DONT_CHECK)
         uiHelper.renderCallback = SurfaceCallback()
         uiHelper.attachTo(surfaceView)
@@ -94,15 +93,13 @@ class MainActivity : Activity() {
         ssaoOptions.enabled = true
         view.ambientOcclusionOptions = ssaoOptions
 
-//        scene.skybox = Skybox.Builder().color(0.048f, 0.051f, 0.031f, 1.0f).build(engine)
-//
-//        if (engine.activeFeatureLevel == Engine.FeatureLevel.FEATURE_LEVEL_0) {
-//            // post-processing is not supported at feature level 0
-//            view.isPostProcessingEnabled = false
-//        } else {
-//            // NOTE: Try to disable post-processing (tone-mapping, etc.) to see the difference
-//            // view.isPostProcessingEnabled = false
-//        }
+        if (engine.activeFeatureLevel == Engine.FeatureLevel.FEATURE_LEVEL_0) {
+            // post-processing is not supported at feature level 0
+            view.isPostProcessingEnabled = false
+        } else {
+            // NOTE: Try to disable post-processing (tone-mapping, etc.) to see the difference
+            // view.isPostProcessingEnabled = false
+        }
 
         // Tell the view which camera we want to use
         view.camera = camera
@@ -120,8 +117,6 @@ class MainActivity : Activity() {
         scene.skybox = ibl.skybox
         scene.indirectLight = ibl.indirectLight
 
-        val materials = mapOf("DefaultMaterial" to materialInstance)
-        mesh = loadMesh(assets, "models/shader_ball.filamesh", materials, engine)
 
         // To create a renderable we first create a generic entity
         renderable = EntityManager.get().create()
@@ -132,12 +127,12 @@ class MainActivity : Activity() {
             // Overall bounding box of the renderable
             .boundingBox(Box(0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.01f))
             // Sets the mesh data of the first primitive
-            .geometry(0, RenderableManager.PrimitiveType.TRIANGLES, vertexBuffer, indexBuffer, 0, 3)
+            .geometry(0, RenderableManager.PrimitiveType.TRIANGLES, vertexBuffer, indexBuffer, 0, 6*6)
             // Sets the material of the first primitive
-            .material(0, material.defaultInstance)
+            .material(0, materialInstance)
             .build(engine, renderable)
 
-        engine.transformManager.setTransform(engine.transformManager.getInstance(mesh.renderable),
+        engine.transformManager.setTransform(engine.transformManager.getInstance(renderable),
             floatArrayOf(
                 1.0f,  0.0f, 0.0f, 0.0f,
                 0.0f,  1.0f, 0.0f, 0.0f,
@@ -147,20 +142,6 @@ class MainActivity : Activity() {
         // Add the entity to the scene to render it
         scene.addEntity(renderable)
 
-        ////////////////////////////////////////////////////////////////
-        // Filament uses column-major matrices
-        engine.transformManager.setTransform(engine.transformManager.getInstance(mesh.renderable),
-            floatArrayOf(
-                1.0f,  0.0f, 0.0f, 0.0f,
-                0.0f,  1.0f, 0.0f, 0.0f,
-                0.0f,  0.0f, 1.0f, 0.0f,
-                0.0f,  0.0f, -10.0f, 1.0f
-            ))
-
-        // Add the entity to the scene to render it
-        scene.addEntity(mesh.renderable)
-
-        ////////////////////////////////////////////////////////////////
         light = EntityManager.get().create()
         val (r, g, b) = Colors.cct(6_500.0f)
         LightManager.Builder(LightManager.Type.DIRECTIONAL)
@@ -178,57 +159,89 @@ class MainActivity : Activity() {
         // Add the entity to the scene to render it
         camera.setExposure(16.0f, 1.0f / 125.0f, 100.0f)
 
-        startAnimation()
+        //this is the default value
+        camera.lookAt(0.0, 0.0, 0.0, 0.0, 0.0, -1.0, 0.0, 1.0, 0.0)
+        //camera.lookAt(0.0, 3.0, 4.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0)
+       // startAnimation()
     }
 
     private fun loadMaterial() {
-        val name = "materials/clear_coat.filamat"
+        val name = "materials/lit.filamat"
         readUncompressedAsset(name).let {
             material = Material.Builder().payload(it, it.remaining()).build(engine)
         }
-        //if (engine.activeFeatureLevel == Engine.FeatureLevel.FEATURE_LEVEL_0) {
-            //name = "materials/baked_color_es2.filamat"
-        //}
-//        val buffer = readUncompressedAsset(name)
-//        buffer.let {
-//            val remainingBytes = it.remaining()
-//            val materialBuilder = Material.Builder()
-//            val materialPayload = materialBuilder.payload(it, remainingBytes)
-//            material = materialPayload.build(engine)//
-//
-//        }
 
     }
 
     private fun createMesh() {
-        val intSize = 4
         val floatSize = 4
         val shortSize = 2
-        // A vertex is a position + a color:
-        // 3 floats for XYZ position, 1 integer for color
-        val vertexSize = 3 * floatSize + intSize
+        // A vertex is a position + a tangent frame:
+        // 3 floats for XYZ position, 4 floats for normal+tangents (quaternion)
+        val vertexSize = 3 * floatSize + 4 * floatSize
 
         // Define a vertex and a function to put a vertex in a ByteBuffer
-        data class Vertex(val x: Float, val y: Float, val z: Float, val color: Int)
+        @Suppress("ArrayInDataClass")
+        data class Vertex(val x: Float, val y: Float, val z: Float, val tangents: FloatArray)
         fun ByteBuffer.put(v: Vertex): ByteBuffer {
             putFloat(v.x)
             putFloat(v.y)
             putFloat(v.z)
-            putInt(v.color)
+            v.tangents.forEach { putFloat(it) }
             return this
         }
 
-        // We are going to generate a single triangle
-        val vertexCount = 3
-        val a1 = PI * 2.0 / 3.0
-        val a2 = PI * 4.0 / 3.0
+        // 6 faces, 4 vertices per face
+        val vertexCount = 6 * 4
+
+        // Create tangent frames, one per face
+        val tfPX = FloatArray(4)
+        val tfNX = FloatArray(4)
+        val tfPY = FloatArray(4)
+        val tfNY = FloatArray(4)
+        val tfPZ = FloatArray(4)
+        val tfNZ = FloatArray(4)
+
+        MathUtils.packTangentFrame( 0.0f,  1.0f, 0.0f, 0.0f, 0.0f, -1.0f,  1.0f,  0.0f,  0.0f, tfPX)
+        MathUtils.packTangentFrame( 0.0f,  1.0f, 0.0f, 0.0f, 0.0f, -1.0f, -1.0f,  0.0f,  0.0f, tfNX)
+        MathUtils.packTangentFrame(-1.0f,  0.0f, 0.0f, 0.0f, 0.0f, -1.0f,  0.0f,  1.0f,  0.0f, tfPY)
+        MathUtils.packTangentFrame(-1.0f,  0.0f, 0.0f, 0.0f, 0.0f,  1.0f,  0.0f, -1.0f,  0.0f, tfNY)
+        MathUtils.packTangentFrame( 0.0f,  1.0f, 0.0f, 1.0f, 0.0f,  0.0f,  0.0f,  0.0f,  1.0f, tfPZ)
+        MathUtils.packTangentFrame( 0.0f, -1.0f, 0.0f, 1.0f, 0.0f,  0.0f,  0.0f,  0.0f, -1.0f, tfNZ)
 
         val vertexData = ByteBuffer.allocate(vertexCount * vertexSize)
             // It is important to respect the native byte order
             .order(ByteOrder.nativeOrder())
-            .put(Vertex(1.0f,              0.0f,              0.0f, 0xffff0000.toInt()))
-            .put(Vertex(cos(a1).toFloat(), sin(a1).toFloat(), 0.0f, 0xff00ff00.toInt()))
-            .put(Vertex(cos(a2).toFloat(), sin(a2).toFloat(), 0.0f, 0xff0000ff.toInt()))
+            // Face -Z
+            .put(Vertex(-1.0f, -1.0f, -1.0f, tfNZ))
+            .put(Vertex(-1.0f,  1.0f, -1.0f, tfNZ))
+            .put(Vertex( 1.0f,  1.0f, -1.0f, tfNZ))
+            .put(Vertex( 1.0f, -1.0f, -1.0f, tfNZ))
+            // Face +X
+            .put(Vertex( 1.0f, -1.0f, -1.0f, tfPX))
+            .put(Vertex( 1.0f,  1.0f, -1.0f, tfPX))
+            .put(Vertex( 1.0f,  1.0f,  1.0f, tfPX))
+            .put(Vertex( 1.0f, -1.0f,  1.0f, tfPX))
+            // Face +Z
+            .put(Vertex(-1.0f, -1.0f,  1.0f, tfPZ))
+            .put(Vertex( 1.0f, -1.0f,  1.0f, tfPZ))
+            .put(Vertex( 1.0f,  1.0f,  1.0f, tfPZ))
+            .put(Vertex(-1.0f,  1.0f,  1.0f, tfPZ))
+            // Face -X
+            .put(Vertex(-1.0f, -1.0f,  1.0f, tfNX))
+            .put(Vertex(-1.0f,  1.0f,  1.0f, tfNX))
+            .put(Vertex(-1.0f,  1.0f, -1.0f, tfNX))
+            .put(Vertex(-1.0f, -1.0f, -1.0f, tfNX))
+            // Face -Y
+            .put(Vertex(-1.0f, -1.0f,  1.0f, tfNY))
+            .put(Vertex(-1.0f, -1.0f, -1.0f, tfNY))
+            .put(Vertex( 1.0f, -1.0f, -1.0f, tfNY))
+            .put(Vertex( 1.0f, -1.0f,  1.0f, tfNY))
+            // Face +Y
+            .put(Vertex(-1.0f,  1.0f, -1.0f, tfPY))
+            .put(Vertex(-1.0f,  1.0f,  1.0f, tfPY))
+            .put(Vertex( 1.0f,  1.0f,  1.0f, tfPY))
+            .put(Vertex( 1.0f,  1.0f, -1.0f, tfPY))
             // Make sure the cursor is pointing in the right place in the byte buffer
             .flip()
 
@@ -240,10 +253,7 @@ class MainActivity : Activity() {
             // We could use de-interleaved data by declaring two buffers and giving each
             // attribute a different buffer index
             .attribute(VertexBuffer.VertexAttribute.POSITION, 0, VertexBuffer.AttributeType.FLOAT3, 0,             vertexSize)
-            .attribute(VertexBuffer.VertexAttribute.COLOR,    0, VertexBuffer.AttributeType.UBYTE4, 3 * floatSize, vertexSize)
-            // We store colors as unsigned bytes but since we want values between 0 and 1
-            // in the material (shaders), we must mark the attribute as normalized
-            .normalized(VertexBuffer.VertexAttribute.COLOR)
+            .attribute(VertexBuffer.VertexAttribute.TANGENTS, 0, VertexBuffer.AttributeType.FLOAT4, 3 * floatSize, vertexSize)
             .build(engine)
 
         // Feed the vertex data to the mesh
@@ -251,15 +261,19 @@ class MainActivity : Activity() {
         vertexBuffer.setBufferAt(engine, 0, vertexData)
 
         // Create the indices
-        val indexData = ByteBuffer.allocate(vertexCount * shortSize)
+        val indexData = ByteBuffer.allocate(6 * 2 * 3 * shortSize)
             .order(ByteOrder.nativeOrder())
-            .putShort(0)
-            .putShort(1)
-            .putShort(2)
-            .flip()
+        repeat(6) {
+            val i = (it * 4).toShort()
+            indexData
+                .putShort(i).putShort((i + 1).toShort()).putShort((i + 2).toShort())
+                .putShort(i).putShort((i + 2).toShort()).putShort((i + 3).toShort())
+        }
+        indexData.flip()
 
+        // 6 faces, 2 triangles per face,
         indexBuffer = IndexBuffer.Builder()
-            .indexCount(3)
+            .indexCount(vertexCount * 2)
             .bufferType(IndexBuffer.Builder.IndexType.USHORT)
             .build(engine)
         indexBuffer.setBuffer(engine, indexData)
@@ -272,7 +286,12 @@ class MainActivity : Activity() {
         // Specify that our color is in sRGB so the conversion to linear
         // is done automatically for us. If you already have a linear color
         // you can pass it directly, or use Colors.RgbType.LINEAR
-        materialInstance.setParameter("baseColor", Colors.RgbType.SRGB, 0.71f, 0.0f, 0.0f)
+        materialInstance.setParameter("baseColor", Colors.RgbType.SRGB, 1.0f, 0.85f, 0.57f)
+        // The default value is always 0, but it doesn't hurt to be clear about our intentions
+        // Here we are defining a dielectric material
+        materialInstance.setParameter("metallic", 0.0f)
+        // We increase the roughness to spread the specular highlights
+        materialInstance.setParameter("roughness", 0.3f)
     }
 
     private fun loadImageBasedLight() {
@@ -289,13 +308,12 @@ class MainActivity : Activity() {
         animator.addUpdateListener(object : ValueAnimator.AnimatorUpdateListener {
             val transformMatrix = FloatArray(16)
             override fun onAnimationUpdate(a: ValueAnimator) {
-                Matrix.setRotateM(transformMatrix, 0, -(a.animatedValue as Float), 0.0f, 0.0f, 1.0f)
+                Matrix.setRotateM(transformMatrix, 0, -(a.animatedValue as Float), 0.0f, 1.0f, 0.0f)
                 val tcm = engine.transformManager
                 tcm.setTransform(tcm.getInstance(renderable), transformMatrix)
             }
         })
-        //this is the default value
-        camera.lookAt(0.0, 0.0, 0.0, 0.0, 0.0, -1.0, 0.0, 1.0, 0.0)
+
         animator.start()
     }
 
@@ -408,17 +426,6 @@ class MainActivity : Activity() {
             val rewoundBuffer = dst.apply { rewind() }
             return rewoundBuffer
         }
-
-//        assets.openFd(assetName).use { fd ->
-//            val input = fd.createInputStream()
-//            val dst = ByteBuffer.allocate(fd.length.toInt())
-//
-//            val src = Channels.newChannel(input)
-//            src.read(dst)
-//            src.close()
-//
-//            return dst.apply { rewind() }
-//        }
     }
 
 
