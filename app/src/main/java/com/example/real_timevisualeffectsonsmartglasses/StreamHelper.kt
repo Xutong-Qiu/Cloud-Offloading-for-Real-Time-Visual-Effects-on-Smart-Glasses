@@ -221,7 +221,7 @@ class StreamHelper(
 
         // Draw the first frame now.
         frameNumber = 0
-        repaintCanvas()
+//        repaintCanvas()
     }
 
     private fun createExternalTextureId(): Int {
