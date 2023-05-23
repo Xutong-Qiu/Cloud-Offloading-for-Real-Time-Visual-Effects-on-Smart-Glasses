@@ -63,21 +63,35 @@ vertex {
 }
 
 fragment {
+
+
+    vec3 desaturate(vec3 color, float amount) {
+        // Convert color to grayscale using Luma formula:
+        // https://en.wikipedia.org/wiki/Luma_%28video%29
+        vec3 gray = vec3(dot(vec3(0.2126, 0.7152, 0.0722), color));
+
+        return vec3(mix(color, gray, amount));
+    }
+
     void material(inout MaterialInputs material) {
         prepareMaterial(material);
         material.roughness = materialParams.roughness;
         material.metallic = 0.0;
 
+        vec3 worldPos = getWorldPosition();
+        vec3 worldNormal = vec3(1., 1., 1.);
+        vec3 viewPos = getWorldViewVector();
+        vec2 uv = (materialParams.textureTransform * vec4(variable_uv.xy, 0, 1)).xy;
+        uv.y=1.0-uv.y;
+        //uv.x = uv.x * 0.5;
+        vec4 color = texture(materialParams_videoTexture, uv).rgba;
+
+
+        material.baseColor.rgb = inverseTonemapSRGB(texture(materialParams_videoTexture, uv).rgb);
+
         // Apply the video stream to the +Z face on the cube.
         if (variable_uv.z >= 0.0) {
-            vec2 uv = (materialParams.textureTransform * vec4(variable_uv.xy, 0, 1)).xy;
-            uv.y=1.0-uv.y;
-            // If in right-hand side (in portrait mode), apply an offset.
-            //if (uv.y < 0.5) {
-            //    uv.x += materialParams.uvOffset;
-            //}
 
-            material.baseColor.rgb = inverseTonemapSRGB(texture(materialParams_videoTexture, uv).rgb);
 
         } else {
             material.baseColor.rgb = materialParams.baseColor;
