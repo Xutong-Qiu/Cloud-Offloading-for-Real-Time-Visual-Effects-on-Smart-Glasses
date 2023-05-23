@@ -23,6 +23,11 @@ material {
     // is required for lighting, tangent/bitangent for normal mapping
     // and anisotropy)
 
+    // Custom vertex shader outputs
+    variables : [
+        uv
+    ],
+
     // List of parameters exposed by this material
     parameters : [
         // The color must be passed in linear space, not sRGB
@@ -36,18 +41,46 @@ material {
         },
         {
             type : float,
-            name : metallic
+            name : uvOffset
+        },
+        {
+            type : samplerExternal,
+            name : videoTexture
+        },
+        {
+            type : mat4,
+            name : textureTransform
         }
     ],
+}
+
+vertex {
+    void materialVertex(inout MaterialVertexInputs material) {
+        //material.uv = 0.5 * (getPosition() + vec4(1));
+        material.uv.x = getPosition().x/1.6+0.5;
+        material.uv.y = getPosition().y/0.9+0.5;
+    }
 }
 
 fragment {
     void material(inout MaterialInputs material) {
         prepareMaterial(material);
-
-        // Nothing fancy here, we simply copy the parameters
-        material.baseColor.rgb = materialParams.baseColor;
         material.roughness = materialParams.roughness;
-        material.metallic = materialParams.metallic;
+        material.metallic = 0.0;
+
+        // Apply the video stream to the +Z face on the cube.
+        if (variable_uv.z >= 0.0) {
+            vec2 uv = (materialParams.textureTransform * vec4(variable_uv.xy, 0, 1)).xy;
+            uv.y=1.0-uv.y;
+            // If in right-hand side (in portrait mode), apply an offset.
+            //if (uv.y < 0.5) {
+            //    uv.x += materialParams.uvOffset;
+            //}
+
+            material.baseColor.rgb = inverseTonemapSRGB(texture(materialParams_videoTexture, uv).rgb);
+
+        } else {
+            material.baseColor.rgb = materialParams.baseColor;
+        }
     }
 }

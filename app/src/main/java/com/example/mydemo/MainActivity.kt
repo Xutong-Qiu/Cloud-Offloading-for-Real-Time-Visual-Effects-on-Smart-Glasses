@@ -3,11 +3,18 @@ package com.example.mydemo
 import android.animation.ValueAnimator
 import android.app.Activity
 import android.opengl.Matrix
+import android.content.Context
+import android.opengl.EGL14
+import android.opengl.EGLConfig
+import android.opengl.EGLContext
+import android.os.Build
 import android.os.Bundle
 import android.view.SurfaceView
 import android.view.Choreographer
+import android.view.MotionEvent
 import android.view.Surface
 import android.view.animation.LinearInterpolator
+import androidx.annotation.RequiresApi
 import com.google.android.filament.*
 import com.google.android.filament.android.DisplayHelper
 //import com.google.android.filament.android.FilamentHelper
@@ -29,6 +36,8 @@ class MainActivity : Activity() {
             Filament.init()
         }
     }
+    val context: Context
+        get() = this
 
     private lateinit var surfaceView: SurfaceView
     // UiHelper is provided by Filament to manage SurfaceView and SurfaceTexture
@@ -52,6 +61,7 @@ class MainActivity : Activity() {
     private lateinit var materialInstance: MaterialInstance
     private lateinit var vertexBuffer: VertexBuffer
     private lateinit var indexBuffer: IndexBuffer
+    private lateinit var streamHelper: StreamHelper
     //private lateinit var materialInstance: MaterialInstance
     @Entity private var renderable = 0
     @Entity private var light = 0
@@ -67,6 +77,14 @@ class MainActivity : Activity() {
     private lateinit var normal: Texture
     private lateinit var aoRoughnessMetallic: Texture
 
+
+    @RequiresApi(30)
+    class Api30Impl {
+        companion object {
+            fun getDisplay(context: Context) = context.display!!
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         surfaceView = SurfaceView(this)
@@ -79,16 +97,39 @@ class MainActivity : Activity() {
         setupView()
         setupScene()
 
+        @Suppress("deprecation")
+        val display = if (Build.VERSION.SDK_INT >= 30) {
+            Api30Impl.getDisplay(this)
+        } else {
+            windowManager.defaultDisplay!!
+        }
+
+        streamHelper = StreamHelper(this, engine, materialInstance, display)
+        this.title = streamHelper.getTestName()
+
+
     }
 
     private fun setupSurfaceView() {
         uiHelper = UiHelper(UiHelper.ContextErrorPolicy.DONT_CHECK)
         uiHelper.renderCallback = SurfaceCallback()
         uiHelper.attachTo(surfaceView)
+
+        surfaceView.setOnTouchListener { _, event ->
+            when(event.action){
+                MotionEvent.ACTION_DOWN -> {
+                    streamHelper.nextTest()
+                    this.title = streamHelper.getTestName()
+                }
+            }
+            super.onTouchEvent(event)
+        }
+
     }
 
     private fun setupFilament() {
-        engine = Engine.create()
+        val eglContext = createEGLContext()
+        engine = Engine.create(eglContext)
         renderer = engine.createRenderer()
         scene = engine.createScene()
         view = engine.createView()
@@ -156,7 +197,7 @@ class MainActivity : Activity() {
             // Intensity of the sun in lux on a clear day
             .intensity(110_000.0f)
             // The direction is normalized on our behalf
-            .direction(-0.753f, -1.0f, 0.890f)
+            .direction(0.0f, -0.5f, -1.0f)
             .castShadows(true)
             .build(engine, light)
 
@@ -167,12 +208,12 @@ class MainActivity : Activity() {
         camera.setExposure(16.0f, 1.0f / 125.0f, 100.0f)
 
         //this is the default value
-        //camera.lookAt(0.0, 0.0, 0.0, 0.0, 0.0, -1.0, 0.0, 1.0, 0.0)
-        startAnimation()
+        camera.lookAt(0.0, 0.0, 5.0, 0.0, 0.0, -1.0, 0.0, 1.0, 0.0)
+        //startAnimation()
     }
 
     private fun loadMaterial() {
-        val name = "materials/textured_pbr.filamat"
+        val name = "materials/lit.filamat"
         readUncompressedAsset(name).let {
             material = Material.Builder().payload(it, it.remaining()).build(engine)
         }
@@ -184,27 +225,30 @@ class MainActivity : Activity() {
         val shortSize = 2
 
         // A vertex is a position: 3 floats for XYZ
-        val vertexSize = 3 * floatSize
+        val vertexSize = 3 * floatSize + 4 * floatSize
 
         // Define a vertex and a function to put a vertex in a ByteBuffer
-        data class Vertex(val x: Float, val y: Float, val z: Float)
+        @Suppress("ArrayInDataClass")
+        data class Vertex(val x: Float, val y: Float, val z: Float, val tangents: FloatArray)
         fun ByteBuffer.put(v: Vertex): ByteBuffer {
             putFloat(v.x)
             putFloat(v.y)
             putFloat(v.z)
+            v.tangents.forEach { putFloat(it) }
             return this
         }
 
         // 1 square, 4 vertices
         val vertexCount = 4
-
+        val tfPZ = FloatArray(4)
+        MathUtils.packTangentFrame( 1.0f,  0.0f, 0.0f, 0.0f, 1.0f,  0.0f,  0.0f,  0.0f,  1.0f, tfPZ)
         val vertexData = ByteBuffer.allocate(vertexCount * vertexSize)
             .order(ByteOrder.nativeOrder())
             // Square vertices
-            .put(Vertex(-1.0f, -1.0f, 0.0f))
-            .put(Vertex(1.0f, -1.0f, 0.0f))
-            .put(Vertex(1.0f, 1.0f, 0.0f))
-            .put(Vertex(-1.0f, 1.0f, 0.0f))
+            .put(Vertex(-0.8f, -0.45f,  0.0f, tfPZ))
+            .put(Vertex( 0.8f, -0.45f,  0.0f, tfPZ))
+            .put(Vertex( 0.8f,  0.45f,  0.0f, tfPZ))
+            .put(Vertex(-0.8f,  0.45f,  0.0f, tfPZ))
             .flip()
 
         // Declare the layout of our mesh
@@ -345,32 +389,9 @@ class MainActivity : Activity() {
     private fun setupMaterial() {
         // Create an instance of the material to set different parameters on it
         materialInstance = material.createInstance()
+        materialInstance.setParameter("baseColor", Colors.RgbType.SRGB, 5.0f, 0.85f, 0.57f)
+        materialInstance.setParameter("roughness", 0.3f)
 
-        baseColor = loadTexture(engine, resources, R.drawable.floor_basecolor, TextureType.COLOR)
-        normal = loadTexture(engine, resources, R.drawable.floor_normal, TextureType.NORMAL)
-        aoRoughnessMetallic = loadTexture(engine, resources,
-            R.drawable.floor_ao_roughness_metallic, TextureType.DATA)
-
-        // A texture sampler does not need to be kept around or destroyed
-        val sampler = TextureSampler()
-        sampler.anisotropy = 8.0f
-
-        materialInstance.setParameter("baseColor", baseColor, sampler)
-        materialInstance.setParameter("normal", normal, sampler)
-        materialInstance.setParameter("aoRoughnessMetallic", aoRoughnessMetallic, sampler)
-
-
-
-
-//        // Specify that our color is in sRGB so the conversion to linear
-//        // is done automatically for us. If you already have a linear color
-//        // you can pass it directly, or use Colors.RgbType.LINEAR
-//        materialInstance.setParameter("baseColor", Colors.RgbType.SRGB, 1.0f, 0.85f, 0.57f)
-//        // The default value is always 0, but it doesn't hurt to be clear about our intentions
-//        // Here we are defining a dielectric material
-//        materialInstance.setParameter("metallic", 0.0f)
-//        // We increase the roughness to spread the specular highlights
-//        materialInstance.setParameter("roughness", 0.3f)
     }
 
     private fun loadImageBasedLight() {
@@ -444,6 +465,7 @@ class MainActivity : Activity() {
                 // If beginFrame() returns false you should skip the frame
                 // This means you are sending frames too quickly to the GPU
                 if (renderer.beginFrame(swapChain!!, frameTimeNanos)) {
+                    materialInstance.setParameter("uvOffset", streamHelper.uvOffset)
                     renderer.render(view)
                     renderer.endFrame()
                 }
@@ -501,7 +523,30 @@ class MainActivity : Activity() {
             return rewoundBuffer
         }
     }
+    private fun createEGLContext(): EGLContext {
+        // Providing this constant here (rather than using EGL_OPENGL_ES3_BIT ) allows us to use a lower target API for this project.
+        val kEGLOpenGLES3Bit = 64
 
+        val shareContext = EGL14.EGL_NO_CONTEXT
+        val display = EGL14.eglGetDisplay(EGL14.EGL_DEFAULT_DISPLAY)
+
+        val minorMajor: IntArray = IntArray(2)
+        EGL14.eglInitialize(display, minorMajor, 0, minorMajor, 1)
+        val configs = arrayOfNulls<EGLConfig>(1)
+        val numConfig = intArrayOf(0)
+        val attribs = intArrayOf(EGL14.EGL_RENDERABLE_TYPE, kEGLOpenGLES3Bit, EGL14.EGL_NONE)
+        EGL14.eglChooseConfig(display, attribs, 0, configs, 0, 1, numConfig, 0)
+
+        val contextAttribs = intArrayOf(EGL14.EGL_CONTEXT_CLIENT_VERSION, 3, EGL14.EGL_NONE)
+        val context = EGL14.eglCreateContext(display, configs[0], shareContext, contextAttribs, 0)
+
+        val surfaceAttribs = intArrayOf(EGL14.EGL_WIDTH, 1, EGL14.EGL_HEIGHT, 1, EGL14.EGL_NONE)
+
+        val surface = EGL14.eglCreatePbufferSurface(display, configs[0], surfaceAttribs, 0)
+
+        check(EGL14.eglMakeCurrent(display, surface, surface, context)) { "Error making GL context." }
+        return context
+    }
 
 }
 
