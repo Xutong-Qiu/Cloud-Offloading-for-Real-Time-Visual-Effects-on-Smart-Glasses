@@ -63,6 +63,86 @@ vertex {
 }
 
 fragment {
+    vec2 parallaxMap(vec3 V) {
+        // Determine number of layers from angle between V and N
+        float parallaxScale = 1.;
+        float parallaxMinLayers = 20.;
+        float parallaxMaxLayers = 30.;
+
+        float numLayers = mix(parallaxMaxLayers, parallaxMinLayers, abs(dot(vec3(0.0, 0.0, 1.0), V)));
+
+        float layerHeight = 1.0 / numLayers;
+        float currentLayerHeight = 0.0;
+        // Shift of texture coordinates for each iteration
+        vec2 dtex = parallaxScale * V.xy / V.z / numLayers;
+
+        vec2 currentTextureCoords = variable_uv.xy;
+        vec2 textureC = vec2(currentTextureCoords.x/2.0 + 0.5, currentTextureCoords.y);
+        float heightFromTexture = texture(materialParams_videoTexture, textureC).r;
+
+        // while ( heightFromTexture > currentLayerHeight )
+        for (int i = 0; i == 0; i += 0) {
+            if (heightFromTexture <= currentLayerHeight) {
+                break;
+            }
+            currentLayerHeight += layerHeight;
+            // Shift texture coordinates along vector V
+            currentTextureCoords -= dtex;
+            textureC = vec2(currentTextureCoords.x/2.0 + 0.5, currentTextureCoords.y);
+            heightFromTexture = texture(materialParams_videoTexture, textureC).r;
+        }
+
+        vec2 deltaTexCoord = dtex / 2.0;
+        float deltaHeight = layerHeight / 2.0;
+
+        // Return to the mid point of previous layer
+        currentTextureCoords += deltaTexCoord;
+        currentLayerHeight -= deltaHeight;
+
+        // Binary search to increase precision of Steep Parallax Mapping
+        const int numSearches = 8;
+        for (int i = 0; i < numSearches; i += 1) {
+
+            deltaTexCoord /= 2.0;
+            deltaHeight /= 2.0;
+            textureC = vec2(currentTextureCoords.x/2.0 + 0.5, currentTextureCoords.y);
+            heightFromTexture = texture(materialParams_videoTexture, textureC).r;
+
+            // Shift along or against vector V
+            if (heightFromTexture > currentLayerHeight) { // Below the surface
+
+                currentTextureCoords -= deltaTexCoord;
+                currentLayerHeight += deltaHeight;
+
+            } else { // above the surface
+
+                currentTextureCoords += deltaTexCoord;
+                currentLayerHeight -= deltaHeight;
+
+            }
+
+        }
+        return currentTextureCoords;
+    }
+
+    vec2 perturbUv(vec3 surfPosition, vec3 surfNormal, vec3 viewPosition) {
+        vec2 texDx = dFdx(variable_uv.xy);
+        vec2 texDy = dFdy(variable_uv.xy);
+
+        vec3 vSigmaX = dFdx(surfPosition);
+        vec3 vSigmaY = dFdy(surfPosition);
+        vec3 vR1 = cross(vSigmaY, surfNormal);
+        vec3 vR2 = cross(surfNormal, vSigmaX);
+        float fDet = dot(vSigmaX, vR1);
+
+        vec2 vProjVscr = (1.0 / fDet) * vec2(dot(vR1, viewPosition), dot(vR2, viewPosition));
+        vec3 vProjVtex;
+        vProjVtex.xy = texDx * vProjVscr.x + texDy * vProjVscr.y;
+        vProjVtex.z = dot(surfNormal, viewPosition);
+
+        return parallaxMap(vProjVtex);
+    }
+
 
 
     vec3 desaturate(vec3 color, float amount) {
@@ -79,22 +159,31 @@ fragment {
         material.metallic = 0.0;
 
         vec3 worldPos = getWorldPosition();
-        vec3 worldNormal = vec3(1., 1., 1.);
+        vec3 worldNormal = vec3(1.0, 1.0, 1.0);
         vec3 viewPos = getWorldViewVector();
-        vec2 uv = (materialParams.textureTransform * vec4(variable_uv.xy, 0, 1)).xy;
+        //viewPos = vec3(0.0, 0.0, 5.0);
+        vec2 uv = perturbUv(-viewPos, worldNormal, viewPos);
+        //vec2 uv = (materialParams.textureTransform * vec4(variable_uv.xy, 0, 1)).xy;
         uv.y=1.0-uv.y;
-        //uv.x = uv.x * 0.5;
+        uv.x = uv.x * 0.5;
         vec4 color = texture(materialParams_videoTexture, uv).rgba;
 
 
-        material.baseColor.rgb = inverseTonemapSRGB(texture(materialParams_videoTexture, uv).rgb);
+       vec3 keyColor = vec3(0.0, 1.0, 0.0);
 
-        // Apply the video stream to the +Z face on the cube.
-        if (variable_uv.z >= 0.0) {
+       float threshold = 0.675;
+       float slope = 0.2;
+
+       float distance = abs(length(abs(keyColor - color.rgb)));
+       float edge0 = threshold * (1.0 - slope);
+       float alpha = smoothstep(edge0, threshold, distance);
+       color.rgb = desaturate(color.rgb, 1.0 - (alpha * alpha * alpha));
+
+       material.baseColor.a = alpha;
+       material.baseColor.rgb = inverseTonemapSRGB(color.rgb);
+       material.baseColor.rgb *= material.baseColor.a;
 
 
-        } else {
-            material.baseColor.rgb = materialParams.baseColor;
-        }
+       //material.baseColor.rgb = inverseTonemapSRGB(texture(materialParams_videoTexture, uv).rgb);
     }
 }
