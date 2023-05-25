@@ -85,47 +85,47 @@ fragment {
         float heightFromTexture = texture(materialParams_videoTexture, textureC).r;
 
         // while ( heightFromTexture > currentLayerHeight )
-        for (int i = 0; i == 0; i += 0) {
-            if (heightFromTexture <= currentLayerHeight) {
-                break;
-            }
-            currentLayerHeight += layerHeight;
-            // Shift texture coordinates along vector V
-            currentTextureCoords -= dtex;
-            textureC = vec2(currentTextureCoords.x + 0.5, currentTextureCoords.y);
-            heightFromTexture = texture(materialParams_videoTexture, textureC).r;
-        }
-
-        vec2 deltaTexCoord = dtex / 2.0;
-        float deltaHeight = layerHeight / 2.0;
-
-        // Return to the mid point of previous layer
-        currentTextureCoords += deltaTexCoord;
-        currentLayerHeight -= deltaHeight;
+//        for (int i = 0; i == 0; i += 0) {
+//            if (heightFromTexture <= currentLayerHeight) {
+//                break;
+//            }
+//            currentLayerHeight += layerHeight;
+//            // Shift texture coordinates along vector V
+//            currentTextureCoords -= dtex;
+//            textureC = vec2(currentTextureCoords.x + 0.5, currentTextureCoords.y);
+//            heightFromTexture = texture(materialParams_videoTexture, textureC).r;
+//        }
+//
+//        vec2 deltaTexCoord = dtex / 2.0;
+//        float deltaHeight = layerHeight / 2.0;
+//
+//        // Return to the mid point of previous layer
+//        currentTextureCoords += deltaTexCoord;
+//        currentLayerHeight -= deltaHeight;
 
         //Binary search to increase precision of Steep Parallax Mapping
-        const int numSearches = 8;
-        for (int i = 0; i < numSearches; i += 1) {
-
-            deltaTexCoord /= 2.0;
-            deltaHeight /= 2.0;
-            textureC = vec2(currentTextureCoords.x/2.0 + 0.5, currentTextureCoords.y);
-            heightFromTexture = texture(materialParams_videoTexture, textureC).r;
-
-            // Shift along or against vector V
-            if (heightFromTexture > currentLayerHeight) { // Below the surface
-
-                currentTextureCoords -= deltaTexCoord;
-                currentLayerHeight += deltaHeight;
-
-            } else { // above the surface
-
-                currentTextureCoords += deltaTexCoord;
-                currentLayerHeight -= deltaHeight;
-
-            }
-
-        }
+//        const int numSearches = 8;
+//        for (int i = 0; i < numSearches; i += 1) {
+//
+//            deltaTexCoord /= 2.0;
+//            deltaHeight /= 2.0;
+//            textureC = vec2(currentTextureCoords.x/2.0 + 0.5, currentTextureCoords.y);
+//            heightFromTexture = texture(materialParams_videoTexture, textureC).r;
+//
+//            // Shift along or against vector V
+//            if (heightFromTexture > currentLayerHeight) { // Below the surface
+//
+//                currentTextureCoords -= deltaTexCoord;
+//                currentLayerHeight += deltaHeight;
+//
+//            } else { // above the surface
+//
+//                currentTextureCoords += deltaTexCoord;
+//                currentLayerHeight -= deltaHeight;
+//
+//            }
+//
+//        }
         return currentTextureCoords;
     }
 
