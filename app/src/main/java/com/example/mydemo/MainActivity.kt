@@ -208,7 +208,7 @@ class MainActivity : Activity() {
         camera.setExposure(16.0f, 1.0f / 125.0f, 100.0f)
 
         //this is the default value
-        camera.lookAt(0.0, 0.0, 5.0, 0.0, 0.0, -1.0, 0.0, 1.0, 0.0)
+        camera.lookAt(-2.0, 1.0, 2.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0)
         //startAnimation()
     }
 
@@ -407,7 +407,7 @@ class MainActivity : Activity() {
         animator.repeatCount = ValueAnimator.INFINITE
         animator.addUpdateListener { a ->
             val v = (a.animatedValue as Float)
-            camera.lookAt(cos(v) * 9.0, 3.0, sin(v) * 9.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0)
+            camera.lookAt(cos(v) * 3.0, 1.0, sin(v) * 3.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0)
         }
         animator.start()
     }
