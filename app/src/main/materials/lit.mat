@@ -81,20 +81,20 @@ fragment {
         //dtex=vec2(0.1,0.0);
         vec2 currentTextureCoords = variable_uv.xy;
         vec2 textureC = vec2(currentTextureCoords.x/2.0 + 0.5, currentTextureCoords.y);
-        textureC = vec2(currentTextureCoords.x + 0.5, currentTextureCoords.y);
+        //textureC = vec2(currentTextureCoords.x + 0.5, currentTextureCoords.y);
         float heightFromTexture = texture(materialParams_videoTexture, textureC).r;
 
         // while ( heightFromTexture > currentLayerHeight )
-//        for (int i = 0; i == 0; i += 0) {
-//            if (heightFromTexture <= currentLayerHeight) {
-//                break;
-//            }
-//            currentLayerHeight += layerHeight;
-//            // Shift texture coordinates along vector V
-//            currentTextureCoords -= dtex;
-//            textureC = vec2(currentTextureCoords.x + 0.5, currentTextureCoords.y);
-//            heightFromTexture = texture(materialParams_videoTexture, textureC).r;
-//        }
+        for (int i = 0; i == 0; i += 0) {
+            if (heightFromTexture <= currentLayerHeight) {
+                break;
+            }
+            currentLayerHeight += layerHeight;
+            // Shift texture coordinates along vector V
+            currentTextureCoords -= dtex;
+            textureC = vec2(currentTextureCoords.x/2.0 + 0.5, currentTextureCoords.y);
+            heightFromTexture = texture(materialParams_videoTexture, textureC).r;
+        }
 //
 //        vec2 deltaTexCoord = dtex / 2.0;
 //        float deltaHeight = layerHeight / 2.0;
@@ -157,40 +157,75 @@ fragment {
         return vec3(mix(color, gray, amount));
     }
 
+    vec2 test(vec3 viewDir){
+//        vec2 currentTextureCoords = variable_uv.xy;
+//        vec2 textureC =  vec2(currentTextureCoords.x/2.0 + 0.5, currentTextureCoords.y);
+//        float height = texture(materialParams_videoTexture, textureC).r;
+//        vec2 p = viewDir.xy / viewDir.z * (height * 0.5);
+//        return currentTextureCoords - p;
+
+        float numLayers = 10.0;
+        // calculate the size of each layer
+        float layerDepth = 1.0 / numLayers;
+        // depth of current layer
+        float currentLayerDepth = 0.0;
+        // the amount to shift the texture coordinates per layer (from vector P)
+        vec2 P = viewDir.xy*0.1;
+        vec2 deltaTexCoords = P / numLayers;
+
+        vec2  currentTextureCoords     = variable_uv.xy;
+        vec2 textureC =  vec2(currentTextureCoords.x/2.0 + 0.5, currentTextureCoords.y);
+        float height = texture(materialParams_videoTexture, textureC).r;
+        float currentDepthMapValue = height;
+
+        while(currentLayerDepth < currentDepthMapValue)
+        {
+            // shift texture coordinates along direction of P
+            currentTextureCoords -= deltaTexCoords;
+            // get depthmap value at current texture coordinates
+            textureC =  vec2(currentTextureCoords.x/2.0 + 0.5, currentTextureCoords.y);
+            height = texture(materialParams_videoTexture, textureC).r;
+            currentDepthMapValue = height;
+            // get depth of next layer
+            currentLayerDepth += layerDepth;
+        }
+        return currentTextureCoords;
+    }
     void material(inout MaterialInputs material) {
         prepareMaterial(material);
         material.roughness = materialParams.roughness;
         material.metallic = 0.0;
 
         vec3 worldPos = getWorldPosition();
-        vec3 worldNormal = vec3(1.0, 1.0, 1.0);
+        vec3 worldNormal = vec3(0.0, 0.0, 1.0);
         vec3 viewPos = getWorldViewVector();
         //viewPos = normalize(vec3(0.0, 0.0, 5.0)-worldPos);
-        vec2 uv = perturbUv(-viewPos, worldNormal, viewPos);
+        //vec2 uv = perturbUv(-viewPos, worldNormal, viewPos);
+        vec2 uv=test(viewPos);
         //uv = variable_uv.xy;
         //uv-=vec2(0.1,0.1);
-        //uv.x = uv.x * 0.5;
+        uv.x = uv.x * 0.5;
         vec4 color = texture(materialParams_videoTexture, uv).rgba;
 
         //material.baseColor.rgb = inverseTonemapSRGB(color.rgb);
 
-//       vec3 keyColor = vec3(0.0, 1.0, 0.0);
-//
-//       float threshold = 0.675;
-//       float slope = 0.2;
-//
-//       float distance = abs(length(abs(keyColor - color.rgb)));
-//       float edge0 = threshold * (1.0 - slope);
-//       float alpha = smoothstep(edge0, threshold, distance);
-//       color.rgb = desaturate(color.rgb, 1.0 - (alpha * alpha * alpha));
-//
-//       material.baseColor.a = alpha;
-//       material.baseColor.rgb = inverseTonemapSRGB(color.rgb);
-//       material.baseColor.rgb *= material.baseColor.a;
+       vec3 keyColor = vec3(0.0, 1.0, 0.0);
+
+       float threshold = 0.675;
+       float slope = 0.2;
+
+       float distance = abs(length(abs(keyColor - color.rgb)));
+       float edge0 = threshold * (1.0 - slope);
+       float alpha = smoothstep(edge0, threshold, distance);
+       color.rgb = desaturate(color.rgb, 1.0 - (alpha * alpha * alpha));
+
+       material.baseColor.a = alpha;
+       material.baseColor.rgb = inverseTonemapSRGB(color.rgb);
+       material.baseColor.rgb *= material.baseColor.a;
 
         //uv.x=uv.x+0.5;
         //uv.y=uv.y;
-       material.baseColor.rgb = inverseTonemapSRGB(texture(materialParams_videoTexture, uv).rgb);
+       //material.baseColor.rgb = inverseTonemapSRGB(texture(materialParams_videoTexture, uv).rgb);
 
     }
 }
