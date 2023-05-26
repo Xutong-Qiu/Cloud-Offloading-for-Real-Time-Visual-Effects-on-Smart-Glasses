@@ -206,8 +206,10 @@ fragment {
         //uv-=vec2(0.1,0.1);
         uv.x = uv.x * 0.5;
         vec4 color = texture(materialParams_videoTexture, uv).rgba;
-
-        //material.baseColor.rgb = inverseTonemapSRGB(color.rgb);
+//        if(color.rgb == vec3(0.0, 1.0, 0.0)){
+//            material.baseColor.a = 0.0;
+//        }
+        material.baseColor.rgb = inverseTonemapSRGB(color.rgb);
 
        vec3 keyColor = vec3(0.0, 1.0, 0.0);
 
@@ -219,7 +221,7 @@ fragment {
        float alpha = smoothstep(edge0, threshold, distance);
        color.rgb = desaturate(color.rgb, 1.0 - (alpha * alpha * alpha));
 
-       material.baseColor.a = alpha;
+//       material.baseColor.a = alpha;
        material.baseColor.rgb = inverseTonemapSRGB(color.rgb);
        material.baseColor.rgb *= material.baseColor.a;
 

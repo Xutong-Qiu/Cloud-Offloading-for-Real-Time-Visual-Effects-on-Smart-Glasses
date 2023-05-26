@@ -389,7 +389,7 @@ class MainActivity : Activity() {
     private fun setupMaterial() {
         // Create an instance of the material to set different parameters on it
         materialInstance = material.createInstance()
-        materialInstance.setParameter("baseColor", Colors.RgbType.SRGB, 5.0f, 0.85f, 0.57f)
+        materialInstance.setParameter("baseColor", Colors.RgbaType.SRGB, 5.0f, 0.85f, 0.57f, 0.0f)
         materialInstance.setParameter("roughness", 0.3f)
 
     }
