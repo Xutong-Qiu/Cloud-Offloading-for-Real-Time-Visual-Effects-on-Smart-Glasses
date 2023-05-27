@@ -112,15 +112,15 @@ class MainActivity : Activity() {
 
     private var touchX = 0f
     private var touchY = 0f
-    private var cameraAngleX = 0.5
-    private var cameraAngleY = 0.5
+    private var cameraAngleX = 0.0
+    private var cameraAngleY = 90.0
+    private var radius = 1.0
 
     private fun updateCamera() {
-        val radius = 3.0
         val cameraX = radius * cos(Math.toRadians(cameraAngleX)) * cos(Math.toRadians(cameraAngleY))
         val cameraY = radius * sin(Math.toRadians(cameraAngleX))
         val cameraZ = radius * cos(Math.toRadians(cameraAngleX)) * sin(Math.toRadians(cameraAngleY))
-        camera.lookAt(cameraX, cameraY, cameraZ, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0)
+        camera.lookAt(cameraX, cameraY, cameraZ, 0.0, 0.0, 0.0, 0.0, -1.0, 0.0)
     }
 
     private fun setupSurfaceView() {
@@ -141,12 +141,13 @@ class MainActivity : Activity() {
                 MotionEvent.ACTION_DOWN -> {
                     touchX = event.x
                     touchY = event.y
+
                 }
                 MotionEvent.ACTION_MOVE -> {
                     val deltaX = event.x - touchX
                     val deltaY = event.y - touchY
-                    cameraAngleX += deltaY * 0.5
-                    cameraAngleY += deltaX * 0.5
+                    cameraAngleX -= deltaY * 0.5
+                    cameraAngleY -= deltaX * 0.5
                     updateCamera()
                     touchX = event.x
                     touchY = event.y
@@ -239,6 +240,7 @@ class MainActivity : Activity() {
 
         //this is the default value
         updateCamera()
+        //camera.lookAt(0.0, 0.0, 2.0, 0.0, 0.0, 0.0, 0.0, -1.0, 0.0)
         //startAnimation()
     }
 
@@ -420,7 +422,7 @@ class MainActivity : Activity() {
         // Create an instance of the material to set different parameters on it
         materialInstance = material.createInstance()
         materialInstance.setParameter("baseColor", Colors.RgbaType.SRGB, 5.0f, 0.85f, 0.57f, 0.0f)
-        materialInstance.setParameter("roughness", 0.3f)
+        materialInstance.setParameter("roughness", 1.0f)
 
     }
 

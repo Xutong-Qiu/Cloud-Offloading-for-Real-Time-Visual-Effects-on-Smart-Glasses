@@ -83,6 +83,16 @@ class StreamHelper(
         val surface = canvasSurface
         if (surface != null) {
             val canvas = surface.lockCanvas(null)
+            val bitmap = Bitmap.createBitmap(resolution.width, resolution.height, Bitmap.Config.ARGB_8888)
+            val offscreenCanvas = Canvas(bitmap)
+
+            //... Draw onto offscreenCanvas instead of canvas ...
+            // Replace all instances of 'canvas' with 'offscreenCanvas' in this function
+
+            canvas.drawBitmap(bitmap, 0f, 0f, null)
+
+            surface.unlockCanvasAndPost(canvas)
+
 
             val movingPaint = Paint()
             movingPaint.shader = LinearGradient(
@@ -94,7 +104,7 @@ class StreamHelper(
                 kGradientStops,
                 Shader.TileMode.REPEAT
             )
-            canvas.drawRect(
+            offscreenCanvas.drawRect(
                 Rect(0, resolution.height / 2, resolution.width, resolution.height),
                 movingPaint
             )
@@ -109,9 +119,9 @@ class StreamHelper(
                 kGradientStops,
                 Shader.TileMode.REPEAT
             )
-            canvas.drawRect(Rect(0, 0, resolution.width, resolution.height / 2), staticPaint)
+            offscreenCanvas.drawRect(Rect(0, 0, resolution.width, resolution.height / 2), staticPaint)
 
-            surface.unlockCanvasAndPost(canvas)
+            surface.unlockCanvasAndPost(offscreenCanvas)
 
             if (streamSource == StreamSource.CANVAS_STREAM_ACQUIRED) {
                 val image = imageReader!!.acquireLatestImage()
@@ -139,12 +149,12 @@ class StreamHelper(
     private fun startTest() {
 
         // Create and set up a new MediaPlayer
-        mediaPlayer = MediaPlayer.create(activity.context, R.raw.displacement_video) // Replace with your own video file
+        mediaPlayer = MediaPlayer.create(activity.context, R.raw.test2) // Replace with your own video file
 
         // Create the Filament Texture and Sampler objects.
         filamentTexture = Texture.Builder()
             .sampler(Texture.Sampler.SAMPLER_EXTERNAL)
-            .format(Texture.InternalFormat.RGB8)
+            .format(Texture.InternalFormat.RGBA8)
             .build(filamentEngine)
 
         val filamentTexture = this.filamentTexture!!
@@ -165,16 +175,16 @@ class StreamHelper(
 //                Matrix.translateM(textureTransform, 0, -0.5f, -0.3f, 0.0f)
 //                Matrix.scaleM(textureTransform, 0, 0.7f, 0.7f , 0.7f)
 //            }
-            Surface.ROTATION_90 -> {
-                Matrix.translateM(textureTransform, 0, 1.0f, 1.0f, 0.0f)
-                Matrix.rotateM(textureTransform, 0, 180.0f, 0.0f, 0.0f, 1.0f)
-                Matrix.translateM(textureTransform, 0, 1.0f, 0.0f, 0.0f)
-                Matrix.scaleM(textureTransform, 0, -1.0f / aspectRatio, 1.0f, 1.0f)
-            }
-            Surface.ROTATION_270 -> {
-                Matrix.translateM(textureTransform, 0, 1.0f, 0.0f, 0.0f)
-                Matrix.scaleM(textureTransform, 0, -1.0f / aspectRatio, 1.0f, 1.0f)
-            }
+//            Surface.ROTATION_90 -> {
+//                Matrix.translateM(textureTransform, 0, 1.0f, 1.0f, 0.0f)
+//                Matrix.rotateM(textureTransform, 0, 180.0f, 0.0f, 0.0f, 1.0f)
+//                Matrix.translateM(textureTransform, 0, 1.0f, 0.0f, 0.0f)
+//                Matrix.scaleM(textureTransform, 0, -1.0f / aspectRatio, 1.0f, 1.0f)
+//            }
+//            Surface.ROTATION_270 -> {
+//                Matrix.translateM(textureTransform, 0, 1.0f, 0.0f, 0.0f)
+//                Matrix.scaleM(textureTransform, 0, -1.0f / aspectRatio, 1.0f, 1.0f)
+//            }
         }
 
         // Connect the Stream to the Texture and the Texture to the MaterialInstance.
@@ -212,7 +222,7 @@ class StreamHelper(
             filamentTexture.setExternalStream(filamentEngine, filamentStream!!)
 
             this.imageReader = ImageReader.newInstance(
-                resolution.width, resolution.height, ImageFormat.RGB_565, kImageReaderMaxImages
+                resolution.width, resolution.height, ImageFormat.FLEX_RGBA_8888, kImageReaderMaxImages
             ).apply {
                 canvasSurface = surface
             }
