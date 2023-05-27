@@ -110,19 +110,49 @@ class MainActivity : Activity() {
 
     }
 
+    private var touchX = 0f
+    private var touchY = 0f
+    private var cameraAngleX = 0.5
+    private var cameraAngleY = 0.5
+
+    private fun updateCamera() {
+        val radius = 3.0
+        val cameraX = radius * cos(Math.toRadians(cameraAngleX)) * cos(Math.toRadians(cameraAngleY))
+        val cameraY = radius * sin(Math.toRadians(cameraAngleX))
+        val cameraZ = radius * cos(Math.toRadians(cameraAngleX)) * sin(Math.toRadians(cameraAngleY))
+        camera.lookAt(cameraX, cameraY, cameraZ, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0)
+    }
+
     private fun setupSurfaceView() {
         uiHelper = UiHelper(UiHelper.ContextErrorPolicy.DONT_CHECK)
         uiHelper.renderCallback = SurfaceCallback()
         uiHelper.attachTo(surfaceView)
 
         surfaceView.setOnTouchListener { _, event ->
-            when(event.action){
+//            when(event.action){
+//                MotionEvent.ACTION_DOWN -> {
+//                    streamHelper.nextTest()
+//                    this.title = streamHelper.getTestName()
+//                }
+//
+//            }
+//            super.onTouchEvent(event)
+            when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
-                    streamHelper.nextTest()
-                    this.title = streamHelper.getTestName()
+                    touchX = event.x
+                    touchY = event.y
+                }
+                MotionEvent.ACTION_MOVE -> {
+                    val deltaX = event.x - touchX
+                    val deltaY = event.y - touchY
+                    cameraAngleX += deltaY * 0.5
+                    cameraAngleY += deltaX * 0.5
+                    updateCamera()
+                    touchX = event.x
+                    touchY = event.y
                 }
             }
-            super.onTouchEvent(event)
+            true
         }
 
     }
@@ -208,8 +238,8 @@ class MainActivity : Activity() {
         camera.setExposure(16.0f, 1.0f / 125.0f, 100.0f)
 
         //this is the default value
-        //camera.lookAt(2.0, 0.0, 2.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0)
-        startAnimation()
+        updateCamera()
+        //startAnimation()
     }
 
     private fun loadMaterial() {
@@ -245,10 +275,10 @@ class MainActivity : Activity() {
         val vertexData = ByteBuffer.allocate(vertexCount * vertexSize)
             .order(ByteOrder.nativeOrder())
             // Square vertices
-            .put(Vertex(-0.8f, -0.45f,  0.0f, tfPZ))
-            .put(Vertex( 0.8f, -0.45f,  0.0f, tfPZ))
-            .put(Vertex( 0.8f,  0.45f,  0.0f, tfPZ))
-            .put(Vertex(-0.8f,  0.45f,  0.0f, tfPZ))
+            .put(Vertex(-0.4f, -0.45f,  0.0f, tfPZ))
+            .put(Vertex( 0.4f, -0.45f,  0.0f, tfPZ))
+            .put(Vertex( 0.4f,  0.45f,  0.0f, tfPZ))
+            .put(Vertex(-0.4f,  0.45f,  0.0f, tfPZ))
             .flip()
 
         // Declare the layout of our mesh
