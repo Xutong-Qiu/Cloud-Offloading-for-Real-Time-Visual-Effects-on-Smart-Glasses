@@ -311,113 +311,6 @@ class MainActivity : Activity() {
     }
 
 
-//    private fun createMesh() {
-//        val floatSize = 4
-//        val shortSize = 2
-//        // A vertex is a position + a tangent frame:
-//        // 3 floats for XYZ position, 4 floats for normal+tangents (quaternion)
-//        val vertexSize = 3 * floatSize + 4 * floatSize
-//
-//        // Define a vertex and a function to put a vertex in a ByteBuffer
-//        @Suppress("ArrayInDataClass")
-//        data class Vertex(val x: Float, val y: Float, val z: Float, val tangents: FloatArray)
-//        fun ByteBuffer.put(v: Vertex): ByteBuffer {
-//            putFloat(v.x)
-//            putFloat(v.y)
-//            putFloat(v.z)
-//            v.tangents.forEach { putFloat(it) }
-//            return this
-//        }
-//
-//        // 6 faces, 4 vertices per face
-//        val vertexCount = 6 * 4
-//
-//        // Create tangent frames, one per face
-//        val tfPX = FloatArray(4)
-//        val tfNX = FloatArray(4)
-//        val tfPY = FloatArray(4)
-//        val tfNY = FloatArray(4)
-//        val tfPZ = FloatArray(4)
-//        val tfNZ = FloatArray(4)
-//
-//        MathUtils.packTangentFrame( 0.0f,  1.0f, 0.0f, 0.0f, 0.0f, -1.0f,  1.0f,  0.0f,  0.0f, tfPX)
-//        MathUtils.packTangentFrame( 0.0f,  1.0f, 0.0f, 0.0f, 0.0f, -1.0f, -1.0f,  0.0f,  0.0f, tfNX)
-//        MathUtils.packTangentFrame(-1.0f,  0.0f, 0.0f, 0.0f, 0.0f, -1.0f,  0.0f,  1.0f,  0.0f, tfPY)
-//        MathUtils.packTangentFrame(-1.0f,  0.0f, 0.0f, 0.0f, 0.0f,  1.0f,  0.0f, -1.0f,  0.0f, tfNY)
-//        MathUtils.packTangentFrame( 0.0f,  1.0f, 0.0f, 1.0f, 0.0f,  0.0f,  0.0f,  0.0f,  1.0f, tfPZ)
-//        MathUtils.packTangentFrame( 0.0f, -1.0f, 0.0f, 1.0f, 0.0f,  0.0f,  0.0f,  0.0f, -1.0f, tfNZ)
-//
-//        val vertexData = ByteBuffer.allocate(vertexCount * vertexSize)
-//            // It is important to respect the native byte order
-//            .order(ByteOrder.nativeOrder())
-//            // Face -Z
-//            .put(Vertex(-1.0f, -1.0f, -1.0f, tfNZ))
-//            .put(Vertex(-1.0f,  1.0f, -1.0f, tfNZ))
-//            .put(Vertex( 1.0f,  1.0f, -1.0f, tfNZ))
-//            .put(Vertex( 1.0f, -1.0f, -1.0f, tfNZ))
-//            // Face +X
-//            .put(Vertex( 1.0f, -1.0f, -1.0f, tfPX))
-//            .put(Vertex( 1.0f,  1.0f, -1.0f, tfPX))
-//            .put(Vertex( 1.0f,  1.0f,  1.0f, tfPX))
-//            .put(Vertex( 1.0f, -1.0f,  1.0f, tfPX))
-//            // Face +Z
-//            .put(Vertex(-1.0f, -1.0f,  1.0f, tfPZ))
-//            .put(Vertex( 1.0f, -1.0f,  1.0f, tfPZ))
-//            .put(Vertex( 1.0f,  1.0f,  1.0f, tfPZ))
-//            .put(Vertex(-1.0f,  1.0f,  1.0f, tfPZ))
-//            // Face -X
-//            .put(Vertex(-1.0f, -1.0f,  1.0f, tfNX))
-//            .put(Vertex(-1.0f,  1.0f,  1.0f, tfNX))
-//            .put(Vertex(-1.0f,  1.0f, -1.0f, tfNX))
-//            .put(Vertex(-1.0f, -1.0f, -1.0f, tfNX))
-//            // Face -Y
-//            .put(Vertex(-1.0f, -1.0f,  1.0f, tfNY))
-//            .put(Vertex(-1.0f, -1.0f, -1.0f, tfNY))
-//            .put(Vertex( 1.0f, -1.0f, -1.0f, tfNY))
-//            .put(Vertex( 1.0f, -1.0f,  1.0f, tfNY))
-//            // Face +Y
-//            .put(Vertex(-1.0f,  1.0f, -1.0f, tfPY))
-//            .put(Vertex(-1.0f,  1.0f,  1.0f, tfPY))
-//            .put(Vertex( 1.0f,  1.0f,  1.0f, tfPY))
-//            .put(Vertex( 1.0f,  1.0f, -1.0f, tfPY))
-//            // Make sure the cursor is pointing in the right place in the byte buffer
-//            .flip()
-//
-//        // Declare the layout of our mesh
-//        vertexBuffer = VertexBuffer.Builder()
-//            .bufferCount(1)
-//            .vertexCount(vertexCount)
-//            // Because we interleave position and color data we must specify offset and stride
-//            // We could use de-interleaved data by declaring two buffers and giving each
-//            // attribute a different buffer index
-//            .attribute(VertexBuffer.VertexAttribute.POSITION, 0, VertexBuffer.AttributeType.FLOAT3, 0,             vertexSize)
-//            .attribute(VertexBuffer.VertexAttribute.TANGENTS, 0, VertexBuffer.AttributeType.FLOAT4, 3 * floatSize, vertexSize)
-//            .build(engine)
-//
-//        // Feed the vertex data to the mesh
-//        // We only set 1 buffer because the data is interleaved
-//        vertexBuffer.setBufferAt(engine, 0, vertexData)
-//
-//        // Create the indices
-//        val indexData = ByteBuffer.allocate(6 * 2 * 3 * shortSize)
-//            .order(ByteOrder.nativeOrder())
-//        repeat(6) {
-//            val i = (it * 4).toShort()
-//            indexData
-//                .putShort(i).putShort((i + 1).toShort()).putShort((i + 2).toShort())
-//                .putShort(i).putShort((i + 2).toShort()).putShort((i + 3).toShort())
-//        }
-//        indexData.flip()
-//
-//        // 6 faces, 2 triangles per face,
-//        indexBuffer = IndexBuffer.Builder()
-//            .indexCount(vertexCount * 2)
-//            .bufferType(IndexBuffer.Builder.IndexType.USHORT)
-//            .build(engine)
-//        indexBuffer.setBuffer(engine, indexData)
-//    }
-
-
     private fun setupMaterial() {
         // Create an instance of the material to set different parameters on it
         materialInstance = material.createInstance()
@@ -476,8 +369,6 @@ class MainActivity : Activity() {
         engine.destroyScene(scene)
         engine.destroyCameraComponent(camera.entity)
 
-        // Engine.destroyEntity() destroys Filament related resources only
-        // (components), not the entity itself
         val entityManager = EntityManager.get()
         entityManager.destroy(renderable)
         entityManager.destroy(camera.entity)
@@ -526,9 +417,6 @@ class MainActivity : Activity() {
             displayHelper.detach()
             swapChain?.let {
                 engine.destroySwapChain(it)
-                // Required to ensure we don't return before Filament is done executing the
-                // destroySwapChain command, otherwise Android might destroy the Surface
-                // too early
                 engine.flushAndWait()
                 swapChain = null
             }

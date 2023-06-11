@@ -149,7 +149,7 @@ class StreamHelper(
     private fun startTest() {
 
         // Create and set up a new MediaPlayer
-        mediaPlayer = MediaPlayer.create(activity.context, R.raw.test2) // Replace with your own video file
+        mediaPlayer = MediaPlayer.create(activity.context, R.raw.test3) // Replace with your own video file
 
         // Create the Filament Texture and Sampler objects.
         filamentTexture = Texture.Builder()
