@@ -1,0 +1,74 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'filament-tools-plugin'
+    id 'kotlin-android'
+}
+
+kotlin {
+    jvmToolchain(17)
+}
+
+filamentTools {
+    materialInputDir = project.layout.projectDirectory.dir("src/main/materials")
+    materialOutputDir = project.layout.projectDirectory.dir("src/main/assets/materials")
+}
+
+clean.doFirst {
+    delete "src/main/assets"
+}
+
+android {
+    namespace 'com.example.mydemo'
+    compileSdk 33
+    compileSdkVersion 33
+    //ndkVersion 25.1.8937393
+
+    defaultConfig {
+        applicationId "com.example.mydemo"
+        minSdk 28
+        targetSdk 33
+        versionCode 1
+        versionName "1.0"
+
+    }
+
+    // We use the .filamat extension for materials compiled with matc
+    // Telling aapt to not compress them allows to load them efficiently
+    aaptOptions {
+        noCompress 'filamat', 'ktx'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility 17
+        targetCompatibility 17
+    }
+
+}
+
+
+dependencies {
+    implementation "androidx.annotation:annotation:1.6.0"
+    // To use the Java-compatible @Experimental API annotation
+    implementation "androidx.annotation:annotation-experimental:1.4.0-dev01"
+
+    implementation 'com.google.android.filament:filament-utils-android:1.32.2'
+    implementation 'com.google.android.filament:gltfio-android:1.32.2'
+    implementation 'com.google.android.filament:filament-android:1.32.2'
+    implementation 'com.google.android.filament:filamat-android:1.32.2'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.20"
+    //implementation project(':app')
+//    implementation 'androidx.core:core-ktx:1.8.0'
+//    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
+//    implementation 'androidx.activity:activity-compose:1.5.1'
+    //testImplementation 'junit:junit:4.13.2'
+    //androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    //androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    //androidTestImplementation platform('androidx.compose:compose-bom:2022.10.00')
+}

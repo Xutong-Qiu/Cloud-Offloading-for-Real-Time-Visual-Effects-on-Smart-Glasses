@@ -1,0 +1,31 @@
+material {
+    name : "Textured material",
+    parameters : [
+        {
+           type : sampler2d,
+           name : texture
+        },
+        {
+           type : float,
+           name : metallic
+        },
+        {
+            type : float,
+            name : roughness
+        }
+    ],
+    requires : [
+        uv0
+    ],
+    shadingModel : lit,
+    blending : opaque
+}
+
+fragment {
+    void material(inout MaterialInputs material) {
+        prepareMaterial(material);
+        material.baseColor = texture(materialParams_texture, getUV0());
+        material.metallic = materialParams.metallic;
+        material.roughness = materialParams.roughness;
+    }
+}
